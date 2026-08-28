@@ -1,0 +1,344 @@
+{
+  "_scenario2_note": "Scenario 2 (s2_* nodes below) is the symptom-led 'factory buyer' dialogue — see /Users/maciejjaskulski/Downloads/scenario_2_factory_buyer_dev_context.md. Entry point is shared with Scenario 1; config/honeywell-nlp.js detects which one the opening message matches. s2_summary and the refinement re-use Scenario 1's downstream nodes (alternative/handoff_*/refine_failsafe_closed) as-is per the brief. This key is not part of the flow lookup map — never referenced as a step.",
+  "assistantName": "Zoe",
+  "ctxLabels": { "plp": "AI assistant · Honeywell Building Automation", "pdp": "AI assistant · Honeywell Building Automation" },
+  "context": {
+    "application": null,
+    "medium": null,
+    "flow_rate": null,
+    "flow_unit": null,
+    "connection_size": null,
+    "valve_pattern": null,
+    "control_type": null,
+    "actuator_type": null,
+    "supply_voltage": null,
+    "control_signal": null,
+    "fail_safe": null,
+    "active_filters": []
+  },
+  "settings": { "influenceResults": false },
+  "flow": {
+    "plp_start": {
+      "bot": ["Hi, I'm your AI assistant. Tell me what you're looking for and I'll help you find it."]
+    },
+
+    "scenario_demo_intake": {
+      "bot": [
+        "I recognized <b>pressure-independent</b>, <b>water/glycol</b>, <b>~5 GPM</b>, <b>4-inch connection</b>, <b>modulating actuator</b>, <b>24V AC/DC</b>, <b>2–10 VDC control signal</b>, and <b>fail-in-place</b> from what you typed, and I'm using it as filters.",
+        "One thing doesn't line up: in this catalog, <b>4-inch</b> pressure-independent valves are built for much higher flow (<b>55+ GPM</b>) — a 4-inch body isn't sized correctly for <b>5 GPM</b>. The <b>3/4-inch body</b> is the one engineered for that flow rate.",
+        "Want me to proceed with the <b>3/4-inch valve</b> sized for <b>5 GPM</b>?"
+      ],
+      "chips": [
+        { "label": "Yes, use the 3/4-inch valve", "next": "summary" },
+        { "label": "No — show me the 4-inch option anyway", "next": "conflict_alt" },
+        { "label": "What is a pressure-independent valve?", "next": "edu_picv" },
+        { "label": "Why does connection size matter here?", "next": "edu_connection_size" }
+      ]
+    },
+
+    "edu_picv": {
+      "bot": [
+        "A <b>pressure-independent control valve (PICV)</b> combines a flow-limiting cartridge with a modulating control valve in one body. Unlike a standard control valve, it holds the <b>flow rate</b> you set regardless of pressure swings elsewhere in the system — so you don't need a separate balancing valve, and flow stays accurate even as other zones open and close.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://buildings.honeywell.com/us/en/products/by-category/building-management/field-devices/valves/pressure-independent-control-valves/vrn-pressure-independent-control-valves-and-actuators\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">VRN Pressure Independent Control Valves — Specification Data, Form 62-3115 ↗</a></div>"
+      ],
+      "chips": [
+        { "label": "Yes, use the 3/4-inch valve", "next": "summary" },
+        { "label": "No — show me the 4-inch option anyway", "next": "conflict_alt" },
+        { "label": "Why does connection size matter here?", "next": "edu_connection_size" }
+      ]
+    },
+
+    "edu_connection_size": {
+      "bot": [
+        "A valve's <b>connection size</b> and its rated <b>flow range</b> are linked — each body size is engineered to control accurately across a specific flow band. A <b>4-inch PICV</b> in this catalog is rated roughly <b>55+ GPM</b>; running it far below that range, like <b>5 GPM</b>, means the flow-limiting cartridge can't regulate precisely, so the valve won't reliably hold its setpoint. That's why matching body size to actual flow rate matters more than matching it to the pipe size alone.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://buildings.honeywell.com/us/en/products/by-category/building-management/field-devices/valves/pressure-independent-control-valves/vrn-pressure-independent-control-valves-and-actuators\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">VRN Pressure Independent Control Valves — Specification Data, Form 62-3115 (flow rate by valve size) ↗</a></div>"
+      ],
+      "chips": [
+        { "label": "Yes, use the 3/4-inch valve", "next": "summary" },
+        { "label": "No — show me the 4-inch option anyway", "next": "conflict_alt" },
+        { "label": "What is a pressure-independent valve?", "next": "edu_picv" }
+      ]
+    },
+
+    "conflict_alt": {
+      "bot": [
+        "Understood. The closest <b>4-inch</b> pressure-independent valve in this line is rated <b>0–55 GPM</b> — well above your stated <b>5 GPM</b>. Running it that far under its rated range isn't a supported configuration for accurate control.",
+        "If the 4-inch size is fixed because it has to match existing pipe, the usual fix is a <b>reducing PICV</b>: a 4-inch line connection stepping down to a correctly-sized valve body. That's exactly what the <b>3/4-inch option</b> does.",
+        "Want me to go with the 3/4-inch sized valve, or re-enter the flow rate?"
+      ],
+      "chips": [
+        { "label": "Use the 3/4-inch valve", "next": "summary" },
+        { "label": "Let me re-enter the flow rate", "next": "ask_flow_rate", "state": { "_conflictPending": true } }
+      ]
+    },
+
+    "ask_flow_rate": {
+      "bot": [
+        "What's the actual flow rate for the 4-inch line? Type a number — for example, \"60 GPM\"."
+      ]
+    },
+
+    "summary": {
+      "bot": [
+        "Here's what I've captured before I pull the match:",
+        "✓ Application: <b>pressure-independent control valve</b> (stated)<br>✓ Medium: <b>water/glycol</b> (stated)<br>✓ Flow rate: <b>~5 GPM</b> (stated)<br>≈ Connection size: <b>3/4 in</b> (adjusted from your 4 in — see above)<br>✓ Actuator type: <b>modulating</b> (stated)<br>✓ Supply voltage: <b>24V AC/DC</b> (stated)<br>✓ Control signal: <b>modulating 2–10 VDC</b> (stated)<br>✓ Fail-safe action: <b>fail-in-place</b> (stated)<br>≈ Valve pattern: <b>2-way</b> (inferred — the only pattern this application and medium combination supports)",
+        "That's everything I need. Pulling the matching combination…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD002 — VRN2B006.00PX + MN7505A2209+3R",
+        "match": "Exact spec match",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "Matches pressure-independent, water/glycol, ~5 GPM, modulating, 24V AC/DC, 2–10 VDC, fail-in-place — exactly as specified.<br><br><b>Valve</b> VRN2B006.00PX — 2-way, 3/4 in FNPT, 0–6 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7505A2209+3R — non-spring return, modulating 2–10 Vdc, 24 Vac, fail-in-place, 2x aux switch, NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1313.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MN6105/MN7505 44 lb-in. DCA Specification Data (PDF) ↗</a> · <a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/datasheets/63-2632.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Product Data Sheet (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-in-place"
+      },
+      "chips": [
+        { "label": "Show an alternative", "next": "alternative" },
+        { "label": "Add to schedule", "next": "handoff_schedule" },
+        { "label": "Export configuration summary", "next": "handoff_export" }
+      ]
+    },
+
+    "edu_failsafe": {
+      "bot": [
+        "Fail-safe action defines what the actuator does if it loses power or its control signal: <b>fail-in-place</b> holds the valve at its last position, <b>fail-safe closed</b> drives it fully shut, and <b>fail-safe open</b> drives it fully open.",
+        "It matters for what happens to your system during a power outage or wiring fault. <b>Fail-safe closed</b> is common when you want flow to stop on failure. <b>Fail-in-place</b> is common when interrupting flow could cause bigger problems, such as a freeze-protection loop losing circulation.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/manuals-and-guides/installation-guides/63-2622.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Direct Coupled Actuator (DCA) Wiring Guide (PDF) ↗</a></div>"
+      ],
+      "chips": [
+        { "label": "Change it to fail-safe closed now", "next": "refine_failsafe_closed" },
+        { "label": "Got it, keep fail-in-place", "next": "summary" }
+      ]
+    },
+
+    "refine_failsafe_closed": {
+      "bot": [
+        "Updating the actuator — here's the swap: same valve, same modulating <b>2–10 VDC</b> signal and <b>24V AC/DC</b> supply. The difference: this actuator is <b>spring-return</b>, so on power loss it drives the valve fully <b>closed</b> instead of holding its last position."
+      ],
+      "rec": {
+        "name": "VRN2B006.00PX + MS7505A2130/U",
+        "match": "",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "<b>Valve</b> VRN2B006.00PX — unchanged: 2-way, 3/4 in FNPT, 0–6 GPM, 250°F max.<br><b>Actuator</b> MS7505A2130/U — spring return, modulating 2–10 Vdc, 24 Vac, <b>fail-safe closed</b>, 1x aux switch, matching NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1336.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MSxx03/MSxx05 Spring Return DCA Specification Data (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-safe-closed"
+      },
+      "chips": [
+        { "label": "Back to fail-in-place", "next": "summary" },
+        { "label": "Add to schedule", "next": "handoff_schedule_fsc" },
+        { "label": "Export configuration summary", "next": "handoff_export_fsc" }
+      ]
+    },
+
+    "alternative": {
+      "bot": ["Two valid options for this spec — same size and actuator, different valve trim:"],
+      "recs": [
+        { "name": "VRN2B006.00PX + MN7505A2209+3R (plated brass trim)", "match": "Primary recommendation", "price": "In stock · 3–5 business days", "why": "Standard trim for closed-loop water/glycol systems.", "imageKey": "valve" },
+        { "name": "VRN2B006.00SX + MN7505A2209+3R (stainless steel trim)", "match": "Alternative — corrosion-resistant", "price": "Made to order · 2–3 weeks", "why": "Same sizing and actuator; recommended if the <b>glycol concentration</b> runs above ~40% or the loop sees frequent fresh-water makeup.", "imageKey": "valve" }
+      ],
+      "chips": [
+        { "label": "Go with the brass trim", "next": "summary" },
+        { "label": "Go with stainless", "next": "alt_stainless_confirm" }
+      ]
+    },
+
+    "alt_stainless_confirm": {
+      "bot": ["Switched to the <b>stainless steel trim</b> valve — same 3/4 in, 0–6 GPM, 24V AC/DC modulating actuator, fail-in-place."],
+      "rec": {
+        "name": "VRN2B006.00SX + MN7505A2209+3R",
+        "match": "Stainless trim selected",
+        "price": "Made to order · 2–3 weeks",
+        "why": "Stainless steel trim, otherwise identical to the primary recommendation — 2-way, 3/4 in FNPT, 0–6 GPM, modulating 2–10 Vdc, 24 Vac, fail-in-place.",
+        "imageKey": "valve"
+      },
+      "chips": [
+        { "label": "Add to schedule", "next": "handoff_schedule" },
+        { "label": "Export configuration summary", "next": "handoff_export" }
+      ]
+    },
+
+    "handoff_schedule": {
+      "bot": [
+        "Added to your schedule: <b>VRN2BHPXD002</b> — pressure-independent control valve + modulating actuator, 3/4 in, 0–6 GPM, 24V AC/DC, 2–10 VDC, fail-in-place.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        { "label": "Export configuration summary", "next": "handoff_export" },
+        { "label": "Start a new configuration", "next": "plp_start" }
+      ]
+    },
+
+    "handoff_export": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nSKU: VRN2BHPXD002\nValve: VRN2B006.00PX — 2-way PICV, 3/4in FNPT, 0-6 GPM, brass trim, 250F, 360 psi\nActuator: MN7505A2209+3R — Modulating 2-10 Vdc, 24V AC/DC, Fail-in-place, NEMA 3R\nMedium: Water/glycol\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [{ "label": "Done — start over", "next": "plp_start" }]
+    },
+
+    "handoff_schedule_fsc": {
+      "bot": [
+        "Added to your schedule: <b>VRN2B006.00PX + MS7505A2130/U</b> — pressure-independent control valve + modulating actuator, 3/4 in, 0–6 GPM, 24V AC/DC, 2–10 VDC, <b>fail-safe closed</b>.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        { "label": "Export configuration summary", "next": "handoff_export_fsc" },
+        { "label": "Start a new configuration", "next": "plp_start" }
+      ]
+    },
+
+    "handoff_export_fsc": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nValve: VRN2B006.00PX — 2-way PICV, 3/4in FNPT, 0-6 GPM, brass trim, 250F, 360 psi\nActuator: MS7505A2130/U — Modulating 2-10 Vdc, 24V AC/DC, Fail-safe Closed, NEMA 3R\nMedium: Water/glycol\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [{ "label": "Done — start over", "next": "plp_start" }]
+    },
+
+    "browsing": {
+      "bot": ["No problem — I'm here whenever you're ready. Describe your requirement any time."],
+      "chips": [{ "label": "Actually, let's try it", "next": "plp_start" }]
+    },
+
+    "s2_ask_medium": {
+      "bot": [
+        "That's a good fit for an <b>automatic control valve and actuator</b> — it would hold steady flow to each machine without anyone manually tuning it. To match the right one, I'll need a few details about the loop.",
+        "First: what's circulating through it — plain water, or a <b>water/glycol</b> mix? I ask because glycol changes which valve materials and seals are compatible. It's usually called out on the loop's <b>P&amp;ID</b>, or on the label of whatever drum or tote you use to top off the system."
+      ],
+      "chips": [
+        { "label": "Water/glycol", "next": "s2_ask_flow", "state": { "medium": "Water/glycol" } },
+        { "label": "Plain water", "next": "s2_ask_flow", "state": { "medium": "Water" } }
+      ]
+    },
+
+    "s2_ask_flow": {
+      "bot": [
+        "Got it — <b>water/glycol</b> noted. Next: roughly how much flow does this branch need, in gallons per minute? That's what determines valve size, and it directly affects how tightly the loop can hold temperature. If you don't have the number offhand, it's usually readable off the <b>pump curve</b> or pump nameplate feeding this loop, or your process/facilities engineer may have it from the original equipment sizing."
+      ]
+    },
+
+    "s2_flow_size_flag": {
+      "bot": [
+        "That's useful, though pipe size and flow don't always scale together — a line can be run oversized for future capacity or only partly loaded. For two presses on a branch like this, flow is typically in the neighborhood of <b>~5 GPM</b>. Does that sound in the right range, or is that worth confirming against the pump curve before we lock it in? I'll mark it as an estimate either way.",
+        "Also, one thing to flag now: at around 5 GPM, a <b>4-inch</b> connection would actually be oversized for accurate control in this product line — it's built assuming a smaller body at that flow. A <b>3/4-inch</b> valve is the better match here; your team can step it down with a reducer at the 4-inch header if that's easier than re-piping. Does that work for your installation?"
+      ],
+      "chips": [
+        { "label": "Switch to 3/4-inch", "next": "s2_ask_control_type", "state": { "flow_rate": 5, "connection_size": 0.75 } },
+        { "label": "Keep the 4-inch", "next": "s2_keep_4in" }
+      ]
+    },
+
+    "s2_keep_4in": {
+      "bot": [
+        "In this product line, connection size and flow are directly linked — a <b>4-inch</b> body is rated for roughly <b>55+ GPM</b>, so at ~5 GPM it wouldn't be modulating within an accurate control range. I can either walk back through the flow estimate with you, or we go with the correctly-sized <b>3/4-inch</b> valve and step down with a reducer at the header."
+      ],
+      "chips": [
+        { "label": "Use 3/4-inch with a reducer", "next": "s2_ask_control_type", "state": { "flow_rate": 5, "connection_size": 0.75 } },
+        { "label": "Let's re-check the flow number", "next": "s2_ask_flow" }
+      ]
+    },
+
+    "s2_ask_control_type": {
+      "bot": [
+        "Next question: do you want this to just switch fully open or closed (<b>on/off</b>), or continuously adjust to hold a target flow or temperature (<b>modulating</b>)? You mentioned wanting it to self-adjust instead of someone manually tuning it, which points to modulating — just confirming that's the intent."
+      ],
+      "chips": [
+        { "label": "Modulating", "next": "s2_pitch_picv", "state": { "control_type": "Modulating", "actuator_type": "Modulating actuator" } },
+        { "label": "On/off", "next": "s2_pitch_picv", "state": { "control_type": "On/off", "actuator_type": "On/off actuator" } }
+      ]
+    },
+
+    "s2_pitch_picv": {
+      "bot": [
+        "One more thing worth raising: since this branch shares a header with other equipment, another zone opening or closing elsewhere on that header can throw off flow to your presses even with a normal control valve — that's a common cause of the inconsistent temperatures you mentioned. A <b>pressure-independent control valve (PICV)</b> is built specifically to prevent that: it holds steady flow to your machines regardless of what else on the loop is doing. Want me to include that in the recommendation?"
+      ]
+    },
+
+    "s2_ask_signal": {
+      "bot": [
+        "Now, how this talks to your plant controls: what supply voltage and control signal does your system use for a modulating device? Most plants I see use a <b>24V AC/DC</b> supply with a <b>2–10 VDC</b> control signal. That's usually documented in your <b>PLC I/O list</b>, or on the nameplate of whatever actuator you're replacing. If you're not certain, I can default to that as the standard and have your controls team confirm it during install."
+      ],
+      "chips": [
+        { "label": "24V AC/DC · 2–10 VDC", "next": "s2_ask_failsafe", "state": { "supply_voltage": "24V AC/DC", "control_signal": "Modulating 2–10 VDC" } },
+        { "label": "24V AC/DC · 4–20 mA", "next": "s2_ask_failsafe", "state": { "supply_voltage": "24V AC/DC", "control_signal": "Modulating 4–20 mA" } }
+      ]
+    },
+
+    "s2_ask_failsafe": {
+      "bot": [
+        "Last one: if power or the signal is ever lost, should the valve hold its current position, or move to a fixed safe position like fully closed? This is usually driven by your process safety requirements, so it's worth checking with whoever owns your safety documentation for this line if a brief loss of cooling would matter. If nothing critical happens during a short interruption, holding position (<b>fail-in-place</b>) is the common default — it avoids an abrupt process upset."
+      ],
+      "chips": [
+        { "label": "Fail-in-place", "next": "s2_summary", "state": { "fail_safe": "Fail-in-place" } },
+        { "label": "Fail-safe closed", "next": "s2_summary", "state": { "fail_safe": "Fail-safe closed" } }
+      ]
+    },
+
+    "s2_summary": {
+      "bot": [
+        "Here's what I've got:",
+        "Application: cooling loop feeding production equipment — based on your description<br>Medium: <b>water/glycol</b> — you confirmed<br>Valve type: <b>pressure-independent control valve</b> — recommended for the cross-zone interference you described, you confirmed<br>Control type: <b>modulating</b> — from \"self-adjust,\" you confirmed<br>Connection size: <b>3/4-inch</b> — recommended over your stated 4-inch based on flow, you confirmed<br>Flow rate: <b>~5 GPM</b> — estimated for a two-press branch, you confirmed it sounds right, flagged for pump curve verification<br>Power supply: <b>24V AC/DC</b> — standard default, you confirmed, flagged for controls team sign-off<br>Control signal: <b>2–10 VDC modulating</b> — standard default, same flag<br>Fail-safe action: <b>fail-in-place</b> — default for non-safety-critical service, you agreed",
+        "Pulling the matching combination…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD002 — VRN2B006.00PX + MN7505A2209+3R",
+        "match": "Recommended for your loop",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "This holds steady flow to both presses on that branch regardless of what else draws from the shared header — the interference behind the inconsistent temperatures you described. Sized for your ~5 GPM branch: a 3/4-inch pressure-independent valve stepped down from your 4-inch header with a standard reducer, modulating on a 24V AC/DC supply with a 2–10 VDC signal from your plant controls, holding position if power or signal is ever lost.<br><br><b>Valve</b> VRN2B006.00PX — 2-way, 3/4 in FNPT, 0–6 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7505A2209+3R — non-spring return, modulating 2–10 Vdc, 24 Vac, fail-in-place, 2x aux switch, NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1313.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MN6105/MN7505 44 lb-in. DCA Specification Data (PDF) ↗</a> · <a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/datasheets/63-2632.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Product Data Sheet (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-in-place"
+      },
+      "chips": [
+        { "label": "Show an alternative", "next": "alternative" },
+        { "label": "Add to schedule", "next": "handoff_schedule" },
+        { "label": "Export configuration summary", "next": "handoff_export" }
+      ]
+    },
+
+    "s2_refine_failsafe_prompt": {
+      "bot": [
+        "That means switching to a fail-safe closed actuator instead of fail-in-place — same valve, no other changes. The trade-off is that a power loss would cut cooling to these presses entirely rather than holding wherever it was, which your safety team may be weighing against process risk either way. Want me to make that swap?"
+      ],
+      "chips": [
+        { "label": "Yes, swap it", "next": "refine_failsafe_closed" },
+        { "label": "No, keep it as it is", "next": "s2_keep_failsafe_in_place" },
+        { "label": "Tell me more about possible risks", "next": "s2_failsafe_risk_explainer" }
+      ]
+    },
+
+    "s2_keep_failsafe_in_place": {
+      "bot": [
+        "Understood — staying with fail-in-place. No changes to the recommendation."
+      ],
+      "chips": [
+        { "label": "Show an alternative", "next": "alternative" },
+        { "label": "Add to schedule", "next": "handoff_schedule" },
+        { "label": "Export configuration summary", "next": "handoff_export" }
+      ]
+    },
+
+    "s2_failsafe_risk_explainer": {
+      "bot": [
+        "Here's the trade-off in more detail: with <b>fail-in-place</b>, if power or the control signal is ever lost, the valve simply stays wherever it was — flow keeps moving, just without active control until power's restored. With <b>fail-safe closed</b>, that same loss drives the valve fully shut, so cooling to both presses stops immediately.",
+        "Neither is 'safer' in the abstract — it depends which failure mode your team would rather manage: an uncontrolled-but-flowing loop, or a hard stop that could trigger a shutdown or scrap on the presses. That's exactly the kind of call your safety or process engineering team would weigh against whatever process safety analysis (HAZOP or similar) exists for this line. Want me to make the swap to fail-safe closed, or keep it as fail-in-place?"
+      ],
+      "chips": [
+        { "label": "Yes, swap it", "next": "refine_failsafe_closed" },
+        { "label": "No, keep it as it is", "next": "s2_keep_failsafe_in_place" }
+      ]
+    },
+
+    "clarify_generic": {
+      "bot": ["I can work with a partial description — tell me at least the <b>application</b> (pressure-independent or pressure-dependent), the <b>medium</b> (water/glycol or steam), and the <b>flow rate</b>, and I'll ask for anything else I still need."],
+      "chips": [
+        { "label": "What information do I need to provide?", "next": "edu_overview" }
+      ]
+    },
+
+    "edu_overview": {
+      "bot": [
+        "Four things get you to a match fastest: <b>application type</b> (does the valve need to hold flow steady regardless of pressure changes elsewhere — pressure-independent — or not), <b>medium</b> (water/glycol or steam), <b>flow rate</b> (in GPM), and how you want it <b>controlled</b> (modulating for proportional control, or on/off). Everything else — connection size, control signal, supply voltage, fail-safe action — I can help you reason through once I know those four."
+      ],
+      "chips": [{ "label": "Okay, let me describe my system", "next": "plp_start" }]
+    },
+
+    "pdp_start": {
+      "bot": ["You're looking at this configuration.", "Want me to help refine it further?"],
+      "chips": [{ "label": "Yes", "next": "summary" }]
+    }
+  }
+}

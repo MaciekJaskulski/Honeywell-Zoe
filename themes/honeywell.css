@@ -1,0 +1,257 @@
+/* =====================================================================
+   Honeywell (Building Automation) theme — industrial precision, high
+   contrast, zero decoration
+
+   Aesthetic direction (committed):
+     "Black-and-white industrial control-room chrome with a single red
+      brand mark and one interactive blue. Square-ish, dense, technical.
+      No gradients, no soft decoration — this is a spec tool, not retail."
+
+   Brand evidence (buildings.honeywell.com/us/en/products/select-products,
+   captured 2026-08-26 via Chrome MCP getComputedStyle probes + visual
+   screenshots of the live Product Selector):
+     Wordmark / brand mark   rgb(255,0,0)   → #FF0000 ("PRODUCT" in the
+                              stepper header; logo mark red bar)
+     Stepper header bg       #000000 (visually confirmed — full-bleed
+                              black bar behind "PRODUCT SELECTOR" + steps)
+     Interactive blue        rgb(53,150,255) → #3596FF (active step dot,
+                              "SELECT" / link text on product cards)
+     Secondary blue          rgb(0,113,179)  → #0071B3 (tagline text,
+                              secondary CTA text)
+     Body text               rgb(48,48,48)   → #303030
+     Nav text                rgb(29,29,29)   → #1D1D1D
+     Surfaces                #FFFFFF page bg, #F7F7F7 alt panels
+     Card border              ~#E0E0E0, 0.5–1px, minimal radius
+     Type                    "Honeywell Sans" (proprietary) — the site's
+                              own fallback stack is Helvetica, Arial,
+                              sans-serif; reused verbatim rather than
+                              guessing a Google Fonts substitute.
+     Buttons                 near-square (4px), uppercase small caps,
+                              dark-navy/black fill, white text
+     Layout                  dense industrial grid, minimal whitespace,
+                              thin 0.5–1px dividers instead of shadows
+   ===================================================================== */
+
+:root[data-theme="honeywell"] {
+  /* AI Companion label-case profile — this brand IS uppercase/technical */
+  --aic-label-text-transform: uppercase;
+  --aic-label-letter-spacing: 0.02em;
+
+  /* ── Brand colour palette ───────────────────────────────────── */
+  --zv-color-brand:         #3596FF;
+  --zv-color-brand-hover:   #1f7fe6;
+  --zv-color-brand-pressed: #0071B3;
+  --zv-color-primary:       #3596FF;
+  --zv-color-secondary:     #0071B3;
+
+  /* Brand-identity (wordmark only — for host page CSS, never the widget CTA) */
+  --brand-identity:          #FF0000;
+  --brand-header-bg:         #000000;
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --zv-font-family-ubuntu: "Honeywell Sans", Helvetica, Arial, sans-serif;
+  --zv-font-heading:       "Honeywell Sans", Helvetica, Arial, sans-serif;
+  --zv-font-body:          "Honeywell Sans", Helvetica, Arial, sans-serif;
+  --zv-font-weight-bold:   700;
+  --zv-font-weight-semibold: 600;
+
+  /* ── Geometry — near-square, technical, minimal radius ─────────── */
+  --zv-radius-sm:           2px;
+  --zv-radius-md:           4px;
+  --zv-radius-lg:           6px;
+  --zv-radius-pill:         999px;
+
+  --zv-control-radius:      4px;
+  --zv-control-height-md:   44px;
+  --zv-control-padding-x:   18px;
+  --zv-control-padding-y:   12px;
+  --zv-control-font-weight: 600;
+
+  --zv-chip-radius:         4px;          /* square-ish chips, not pills — matches CTA */
+  --zv-chip-height:         36px;
+  --zv-chip-padding-x:      14px;
+  --zv-chip-font-weight:    600;
+
+  --zv-card-radius:         6px;
+  --zv-card-padding:        18px;
+  --zv-card-gap:            14px;
+
+  --zv-input-radius:        4px;
+  --zv-input-padding-x:     14px;
+  --zv-input-padding-y:     12px;
+  --zv-input-height:        46px;
+
+  /* CTA — Honeywell's signature: dark navy/black fill, square corners, uppercase */
+  --zv-cta-radius:          4px;
+  --zv-cta-height:          48px;
+  --zv-cta-padding-x:       22px;
+  --zv-cta-padding-y:       14px;
+  --zv-cta-font-weight:     700;
+  --zv-cta-text-transform:  uppercase;
+  --zv-cta-letter-spacing:  0.03em;
+
+  /* Flat, minimal shadows — this brand uses borders, not elevation */
+  --zv-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --zv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.07);
+  --zv-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.09);
+  --zv-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.11);
+  --zv-shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.13);
+
+  /* ── Zoe widget — Honeywell-specific deltas ─────────────────── */
+  --zoe-chip-radius:                 var(--zv-radius-sm);
+  --zoe-input-border-color:          var(--zv-color-border-soft);
+  --zoe-cta-bg:                      #12203C;
+  --zoe-cta-color:                   #ffffff;
+  /* User message bubble — dedicated token (zoe-widget.css defaults it to
+     var(--zv-color-brand)); overridden here so only the bubble shifts to
+     the deeper secondary blue, not every brand-blue surface. */
+  --zoe-bubble-user-bg:              #0071B3;
+
+  /* ── PDP STYLE PROFILE — Honeywell-specific deltas ─────────────── */
+  --pdp-atc-bg:                      #12203C;
+  --pdp-atc-color:                   #ffffff;
+  --pdp-atc-radius:                  4px;
+  --pdp-bundle-radius:               4px;
+  --pdp-topbar-bg:                   #ffffff;
+  --pdp-topbar-color:                #1D1D1D;
+  --pdp-topbar-accent:               #FF0000;
+}
+
+/* Surface/text/border tokens live here so dark mode can win cleanly. */
+:root[data-theme="honeywell"]:not([data-mode="dark"]) {
+  --zv-color-text:           #1D1D1D;
+  --zv-color-text-secondary: #303030;
+  --zv-color-text-muted:     #5F5E5A;
+  --zv-color-surface:        #ffffff;
+  --zv-color-surface-alt:    #F7F7F7;
+  --zv-color-surface-muted:  #F1EFE8;
+  --zv-color-border:         #E0E0E0;
+  --zv-color-border-soft:    #D3D1C7;
+  --zv-color-border-strong:  #303030;
+}
+
+/* Honeywell dark — keep the industrial contrast; brand blue lifts ~25% for legibility */
+:root[data-theme="honeywell"][data-mode="dark"] {
+  --zv-color-brand:        #6bb3ff;
+  --zv-color-brand-hover:  #8bc3ff;
+  --zv-color-brand-pressed:#4ea3e0;
+  --zv-color-surface:      #17181a;
+  --zv-color-surface-alt:  #0d0e10;
+  --zoe-cta-bg:            #2a3a5c;
+}
+
+/* ── Component-level overrides — no token exists for these yet ───────
+   Filed as library gaps rather than silently living only here:
+   .zoe-send has no dedicated --zoe-send-bg token (it reads --zv-color-brand
+   directly), and .zoe-mock-body has no --zoe-body-padding-* tokens. Both
+   are scoped to this theme only, never touching the canonical file. */
+:root[data-theme="honeywell"] .zoe-send {
+  background: #0071B3;
+}
+:root[data-theme="honeywell"] .zoe-send:hover {
+  background: #005a8f;
+}
+/* Rec card "Add to Cart" (.zoe-rec .actions .primary) reads --zv-color-brand
+   directly too (zoe-widget.css line ~752) — same gap as .zoe-send above.
+   Pinned to the same #0071B3 as the send button + user bubble so every
+   "Add to Cart" surface (chat card and the bespoke details modal, which
+   reads this shade via inline style) reads as one consistent action color. */
+:root[data-theme="honeywell"] .zoe-rec .actions .primary {
+  background: #0071B3;
+}
+:root[data-theme="honeywell"] .zoe-rec .actions .primary:hover {
+  background: #005a8f;
+}
+
+/* ── Rec card layout: photo(s) left, content right (BESPOKE) ───────────
+   Canonical layout (zoe-widget.css §"Messages") stacks a fixed-height,
+   full-bleed `object-fit:cover` banner image above the body — designed
+   for a single hero shot. Two problems for this catalog: our source
+   photos are close-up product label crops, so cover-fit inside a wide
+   short banner zoomed in past the point of being legible; and a
+   valve+actuator combination has TWO physical parts to show, not one.
+   This turns .top into a narrow left column of contained (not cropped)
+   thumbnails — index.html's script appends the paired product's photo
+   into .top at render time (see "Second product photo" below) — with
+   .body as the right column. No canonical token covers this shape, so
+   every property here is a full override, not a delta. */
+:root[data-theme="honeywell"] .zoe-rec {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+}
+:root[data-theme="honeywell"] .zoe-rec .top {
+  flex: 0 0 96px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: transparent;
+  background-image: none;
+  position: static;
+  overflow: visible;
+}
+:root[data-theme="honeywell"] .zoe-rec .top::after {
+  display: none;
+}
+:root[data-theme="honeywell"] .zoe-rec .top img {
+  position: static;
+  width: 96px;
+  height: 76px;
+  object-fit: contain;
+  background: var(--zv-color-surface-alt);
+  border: 1px solid var(--zv-color-border, #E0E0E0);
+  border-radius: 4px;
+  padding: 4px;
+  box-sizing: border-box;
+}
+:root[data-theme="honeywell"] .zoe-rec .body {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.is-wedge .zoe-mock-body {
+  /* .is-wedge's canonical rule (zoe-widget.css §"is-wedge mode") sets
+     padding:0 + overflow:hidden, because it assumes the AI Companion
+     engine owns scrolling internally via [data-aic-panel]. This project
+     uses is-wedge only for the width modifier, with the plain Zoe chat
+     DOM — so scroll ownership has to stay on .zoe-mock-body itself. */
+  padding: 32px 8px 8px;
+  overflow-y: auto;
+}
+
+/* ── Bottom-center docked bar (BESPOKE — see clients/honeywell-zoe/README.md
+   "Known limitations"). The canonical .is-sticky.docked collapse targets
+   .aic-panel__body (AI Companion's own DOM); this panel uses the plain Zoe
+   chat DOM (.zoe-mock-body / .zoe-mock-foot), which has no equivalent
+   canonical collapse rule at any viewport. `.hw-docked` is a project-local
+   class, toggled by index.html's inline script, that hides the transcript
+   and shrinks the panel to header + composer only. Candidate for promoting
+   into zoe-widget.css as a real .is-sticky.docked rule for the plain
+   chat engine, not just the AI Companion one. */
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .zoe-mock-body {
+  display: none;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .zoe-mock-foot {
+  border-top: none;
+}
+:root[data-theme="honeywell"] .hw-expand-btn,
+:root[data-theme="honeywell"] .hw-minimize-btn {
+  width: var(--zv-size-3, 32px); height: var(--zv-size-3, 32px); border: 0; background: transparent;
+  cursor: pointer; color: var(--zoe-head-action-color, currentColor);
+  display: grid; place-items: center; transition: all .15s;
+}
+:root[data-theme="honeywell"] .hw-expand-btn:hover,
+:root[data-theme="honeywell"] .hw-minimize-btn:hover {
+  background: var(--zoe-head-action-hover-bg, rgba(255,255,255,.15));
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .hw-minimize-btn,
+:root[data-theme="honeywell"] .zoe-mock-panel:not(.hw-docked) .hw-expand-btn {
+  display: none;
+}

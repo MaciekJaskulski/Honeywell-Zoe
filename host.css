@@ -1,0 +1,143 @@
+/* Host page replica — Honeywell Building Automation "Field Devices"
+   category page (buildings.honeywell.com/us/en/products/by-category/
+   building-management/field-devices). Hand-built visual replica (not a
+   scrape of the live AEM bundle — see config/brand.json "note" for why),
+   grounded in the tokens + computed styles captured this session. This
+   file styles ONLY the client's own host page markup below <body> — the
+   Zoe experience layer is themed separately via themes/honeywell.css +
+   the canonical widget stylesheets. */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Honeywell Sans", Helvetica, Arial, sans-serif;
+  color: #303030;
+  background: #ffffff;
+  font-size: 14px;
+  line-height: 1.5;
+}
+a { color: inherit; text-decoration: none; }
+
+.hw-utility {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 12px;
+  color: #5a5a5a;
+  padding: 6px 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.hw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.hw-logo { display: flex; align-items: center; gap: 12px; }
+.hw-logo .mark {
+  width: 26px; height: 26px; background: #ff0000;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 15px; flex-shrink: 0;
+}
+.hw-logo .name { font-weight: 700; font-size: 15px; color: #1d1d1d; line-height: 1.2; }
+.hw-logo .division { font-size: 11px; color: #5a5a5a; letter-spacing: 0.04em; }
+.hw-nav { display: flex; gap: 28px; font-size: 13px; font-weight: 700; color: #1d1d1d; }
+
+.hw-region-bar {
+  background: #f7f7f7; border-bottom: 1px solid #e6e6e6;
+  padding: 10px 32px; font-size: 13px; color: #5a5a5a;
+  display: flex; align-items: center; gap: 10px;
+}
+.hw-region-bar select { font-family: inherit; font-size: 13px; padding: 4px 8px; border: 1px solid #767676; }
+
+.hw-breadcrumb {
+  padding: 14px 32px; font-size: 13px; color: #5a5a5a;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.hw-breadcrumb a { color: #5a5a5a; }
+.hw-breadcrumb .current { color: #3596ff; }
+.hw-breadcrumb .sep { color: #b8b8b8; }
+
+/* ── Product Selector promo banner — gradient rgb(0,0,0) → rgb(59,59,59),
+     confirmed via getComputedStyle on the live page's .product-type-selector. */
+.hw-promo {
+  margin: 0 32px 32px;
+  background: linear-gradient(90deg, #000000 0%, #3b3b3b 100%);
+  color: #fff;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-radius: 2px;
+}
+.hw-promo-left { flex: 1 1 320px; min-width: 260px; }
+.hw-promo-title { font-size: 26px; line-height: 1.15; margin: 0 0 10px; }
+.hw-promo-title b { color: #ff0000; font-weight: 700; }
+.hw-promo-desc { font-size: 13px; color: #d6d6d6; line-height: 1.6; max-width: 420px; }
+
+.hw-promo-right { display: flex; flex-direction: row; align-items: flex-end; gap: 16px; flex: 1 1 560px; min-width: 320px; flex-wrap: wrap; }
+.hw-promo-form { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.hw-promo-form-field label { display: block; font-size: 12px; color: #d6d6d6; margin-bottom: 6px; }
+.hw-promo-form-field select {
+  font-family: inherit; font-size: 13px; padding: 9px 12px; min-width: 220px;
+  border: 1px solid #767676; background: #fff; color: #000;
+}
+.hw-configure-btn {
+  font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: .02em;
+  padding: 10px 20px; border-radius: 4px; border: none;
+  background: #dfe0df; color: #606060; cursor: not-allowed;
+}
+
+.hw-promo-divider { display: flex; align-items: center; gap: 8px; color: #8a8a8a; font-size: 12px; }
+.hw-promo-divider::before, .hw-promo-divider::after { content: ""; width: 20px; height: 1px; background: #4a4a4a; }
+
+.hw-zoe-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent; border: 1.5px solid #3596ff; color: #fff;
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  padding: 10px 18px; border-radius: 4px; cursor: pointer;
+  transition: background .15s;
+}
+.hw-zoe-cta:hover { background: rgba(53,150,255,0.15); }
+.hw-zoe-cta .spark { font-size: 15px; color: #3596ff; }
+
+.hw-main { padding: 0 32px 40px; }
+.hw-main h1 { font-size: 28px; font-weight: 400; color: #1d1d1d; margin: 0 0 24px; }
+
+.hw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.hw-tile {
+  border: 1px solid #e6e6e6; border-radius: 4px; padding: 20px 16px;
+  text-align: center; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+}
+.hw-tile:hover { border-color: #3596ff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.hw-tile .icon {
+  width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 4px;
+  background: #f1efe8; display: flex; align-items: center; justify-content: center;
+  color: #5a5a5a;
+}
+.hw-tile .icon svg { width: 28px; height: 28px; }
+.hw-tile .label { font-size: 13px; font-weight: 700; color: #1d1d1d; }
+
+.hw-footer { border-top: 1px solid #2c2c2c; background: #1a1a1a; color: #d6d6d6; padding: 40px 32px; margin-top: 40px; }
+.hw-footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto 24px; }
+.hw-footer-grid h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #fff; margin: 0 0 12px; font-weight: 700; }
+.hw-footer-grid a { display: block; font-size: 12px; color: #a8a8a8; margin-bottom: 10px; }
+.hw-footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 20px; border-top: 1px solid #333; font-size: 11px; color: #8a8a8a; }
+
+@media (max-width: 900px) {
+  .hw-grid { grid-template-columns: repeat(2, 1fr); }
+  .hw-footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .hw-grid { grid-template-columns: 1fr; }
+  .hw-footer-grid { grid-template-columns: 1fr; }
+  .hw-promo { flex-direction: column; align-items: flex-start; }
+  .hw-promo-right { flex-direction: column; align-items: flex-start; }
+  .hw-promo-divider { align-self: stretch; }
+  .hw-promo-divider::before, .hw-promo-divider::after { flex: 1; width: auto; }
+}

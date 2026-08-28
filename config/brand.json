@@ -1,0 +1,22 @@
+{
+  "client": "Honeywell — Building Automation",
+  "slug": "honeywell",
+  "source_url": "https://buildings.honeywell.com/us/en/products/select-products?zv-selector-type=valves-and-actuators&vcs=12058",
+  "captured": "2026-08-26",
+  "capture_method": "Chrome MCP getComputedStyle probes + full-page visual screenshots of the live Product Selector (Application/Calculator/Valves/Actuators/Results/Schedule steps)",
+  "note": "The live page is an Adobe AEM enterprise bundle (base href points back to buildings.honeywell.com and pulls Adobe Launch/Target + Marketo tracking). Rather than vendoring that multi-megabyte bundle verbatim into a demo mockup (which would fire real analytics against Honeywell's production infrastructure), the host page in index.html is a hand-built visual replica of the Application-step surface, grounded in the extracted tokens below and the screenshots captured this session.",
+  "tokens": {
+    "wordmark_red": "#FF0000",
+    "stepper_header_bg": "#000000",
+    "interactive_blue": "#3596FF",
+    "secondary_blue": "#0071B3",
+    "body_text": "#303030",
+    "nav_text": "#1D1D1D",
+    "surface_white": "#FFFFFF",
+    "surface_alt": "#F7F7F7",
+    "card_border": "#E0E0E0",
+    "font_stack": "\"Honeywell Sans\", Helvetica, Arial, sans-serif"
+  },
+  "interesting_finding": "The real Product Selector's DOM already contains classes named zv-advisor / zv-advisor-questionnaire / zoovu-component-labels — the existing form-based selector Honeywell is asking to replace is itself already partly built on Zoovu's advisor engine.",
+  "theme_file": "themes/honeywell.css"
+}

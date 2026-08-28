@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="honeywell" data-mode="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Selector Tool | Honeywell Field Devices</title>
+
+<!-- Client host page — hand-built replica of buildings.honeywell.com's
+     "Field Devices" category page (see config/brand.json for provenance). -->
+<link rel="stylesheet" href="host.css?v=3" />
+
+<!-- Canonical Zoovu CSS — linked, never inlined. -->
+<link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/tokens.css" />
+<link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/variables.css" />
+<link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/zoe-widget.css" />
+
+<!-- Client theme — the only brand-fill file, local to this mockup. -->
+<link rel="stylesheet" href="themes/honeywell.css?v=6" />
+</head>
+<body>
+
+<!-- ── Honeywell's own host page (replica) — everything until the Zoe
+     embed comment below is the client's page, not a Zoovu surface. ── -->
+<div class="hw-utility">
+  <span>UNITED STATES (EN)</span>
+  <span>CONTACT</span>
+  <span>SIGN IN</span>
+  <span>BULK ORDER</span>
+</div>
+
+<header class="hw-header">
+  <div class="hw-logo">
+    <div class="mark">H</div>
+    <div>
+      <div class="name">Honeywell Technologies</div>
+      <div class="division">BUILDING AUTOMATION</div>
+    </div>
+  </div>
+  <nav class="hw-nav">
+    <a href="#">Products</a>
+    <a href="#">Industries</a>
+    <a href="#">Automation Solutions</a>
+    <a href="#">Brands</a>
+    <a href="#">Support</a>
+    <a href="#">News &amp; Media</a>
+  </nav>
+</header>
+
+<div class="hw-region-bar">
+  <span>You are browsing the product catalog for</span>
+  <select><option>United States</option></select>
+</div>
+
+<div class="hw-breadcrumb">
+  <a href="#">Products</a><span class="sep">›</span>
+  <a href="#">By Category</a><span class="sep">›</span>
+  <a href="#">Building Management &amp; Automation</a><span class="sep">›</span>
+  <span class="current">Field Devices</span>
+</div>
+
+<!-- Product Selector promo banner — gradient rgb(0,0,0)→rgb(59,59,59),
+     confirmed via getComputedStyle on the live page. -->
+<div class="hw-promo">
+  <div class="hw-promo-left">
+    <div class="hw-promo-title"><b>PRODUCT</b> SELECTOR</div>
+    <div class="hw-promo-desc">Take the guesswork out of determining which product will be an exact fit. Our calculators help determine the parameters for your project to ensure that our products fit your needs.</div>
+  </div>
+  <div class="hw-promo-right">
+    <div class="hw-promo-form">
+      <div class="hw-promo-form-field">
+        <label>Select a Product Type</label>
+        <select><option>Select</option><option>Valves and Actuators</option></select>
+      </div>
+      <button class="hw-configure-btn" disabled>CONFIGURE NOW</button>
+    </div>
+    <div class="hw-promo-divider">or</div>
+    <button class="hw-zoe-cta" id="hwZoeCta" type="button">
+      <span class="spark">✦</span> Describe what you need here
+    </button>
+  </div>
+</div>
+
+<main class="hw-main">
+  <h1>Field Devices</h1>
+  <div class="hw-grid">
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><div class="label">Remote Temperature Controllers</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="1"/><circle cx="12" cy="10" r="2.4"/><path d="M9 17h6"/></svg></div><div class="label">Wall Modules</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M7 6v12M17 6v12"/></svg></div><div class="label">Variable Frequency Drives</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><div class="label">Thermostats</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="14" rx="1"/><path d="M8 9h8M8 13h5"/></svg></div><div class="label">Room Controllers</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9v6M11 9v6M15 9v6"/></svg></div><div class="label">Duct &amp; Damper Actuators</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v4M12 17v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M4.2 19.8 7 17M17 7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></div><div class="label">Sensors</div></div>
+    <div class="hw-tile"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div><div class="label">View All Field Devices</div></div>
+  </div>
+</main>
+
+<footer class="hw-footer">
+  <div class="hw-footer-grid">
+    <div>
+      <h4>Products</h4>
+      <a href="#">By Brand</a>
+      <a href="#">By Category</a>
+    </div>
+    <div>
+      <h4>Industries</h4>
+      <a href="#">Commercial Buildings</a>
+      <a href="#">Data Centers</a>
+      <a href="#">Healthcare</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#">Download Center</a>
+      <a href="#">Find A Partner</a>
+      <a href="#">Training</a>
+    </div>
+    <div>
+      <h4>Contact Us</h4>
+      <a href="#">Business Inquiries</a>
+      <a href="#">Subscribe</a>
+    </div>
+  </div>
+  <div class="hw-footer-bottom">Copyright © 2026 Honeywell International Inc.</div>
+</footer>
+<!-- ── End of Honeywell's own host page ── -->
+
+<script>
+  /* Synchronous inline data — required workaround. zoe-engine.js (line 326)
+     captures window.__ZOE_FLOW__ into a closure at script-load time, before
+     the async data-data fetch below resolves, so the fetched flow never
+     reaches the running engine (confirmed this session: window.__ZOE_FLOW__
+     ends up correct, but the chat keeps rendering the stale default — a
+     closure-capture race in the canonical engine, filed as a library gap
+     rather than patched here). zoe-data.js documents exactly this escape
+     hatch: "Path A: inlined data wins. Set window.__INLINED_CONVERSATION__
+     ... before loading this script." This mirrors config/conversation.json
+     verbatim (see that file for the version a designer would actually edit). */
+  window.__INLINED_CONVERSATION__ = {
+  "flow": {
+    "plp_start": {
+      "bot": [
+        "Hi, I'm your AI assistant. Tell me what you're looking for and I'll help you find it."
+      ]
+    },
+    "scenario_demo_intake": {
+      "bot": [
+        "I recognized <b>pressure-independent</b>, <b>water/glycol</b>, <b>~5 GPM</b>, <b>4-inch connection</b>, <b>modulating actuator</b>, <b>24V AC/DC</b>, <b>2–10 VDC control signal</b>, and <b>fail-in-place</b> from what you typed, and I'm using it as filters.",
+        "One thing doesn't line up: in this catalog, <b>4-inch</b> pressure-independent valves are built for much higher flow (<b>55+ GPM</b>) — a 4-inch body isn't sized correctly for <b>5 GPM</b>. The <b>3/4-inch body</b> is the one engineered for that flow rate.",
+        "Want me to proceed with the <b>3/4-inch valve</b> sized for <b>5 GPM</b>?"
+      ],
+      "chips": [
+        {
+          "label": "Yes, use the 3/4-inch valve",
+          "next": "summary"
+        },
+        {
+          "label": "No — show me the 4-inch option anyway",
+          "next": "conflict_alt"
+        },
+        {
+          "label": "What is a pressure-independent valve?",
+          "next": "edu_picv"
+        },
+        {
+          "label": "Why does connection size matter here?",
+          "next": "edu_connection_size"
+        }
+      ]
+    },
+    "edu_picv": {
+      "bot": [
+        "A <b>pressure-independent control valve (PICV)</b> combines a flow-limiting cartridge with a modulating control valve in one body. Unlike a standard control valve, it holds the <b>flow rate</b> you set regardless of pressure swings elsewhere in the system — so you don't need a separate balancing valve, and flow stays accurate even as other zones open and close.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://buildings.honeywell.com/us/en/products/by-category/building-management/field-devices/valves/pressure-independent-control-valves/vrn-pressure-independent-control-valves-and-actuators\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">VRN Pressure Independent Control Valves — Specification Data, Form 62-3115 ↗</a></div>"
+      ],
+      "chips": [
+        {
+          "label": "Yes, use the 3/4-inch valve",
+          "next": "summary"
+        },
+        {
+          "label": "No — show me the 4-inch option anyway",
+          "next": "conflict_alt"
+        },
+        {
+          "label": "Why does connection size matter here?",
+          "next": "edu_connection_size"
+        }
+      ]
+    },
+    "edu_connection_size": {
+      "bot": [
+        "A valve's <b>connection size</b> and its rated <b>flow range</b> are linked — each body size is engineered to control accurately across a specific flow band. A <b>4-inch PICV</b> in this catalog is rated roughly <b>55+ GPM</b>; running it far below that range, like <b>5 GPM</b>, means the flow-limiting cartridge can't regulate precisely, so the valve won't reliably hold its setpoint. That's why matching body size to actual flow rate matters more than matching it to the pipe size alone.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://buildings.honeywell.com/us/en/products/by-category/building-management/field-devices/valves/pressure-independent-control-valves/vrn-pressure-independent-control-valves-and-actuators\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">VRN Pressure Independent Control Valves — Specification Data, Form 62-3115 (flow rate by valve size) ↗</a></div>"
+      ],
+      "chips": [
+        {
+          "label": "Yes, use the 3/4-inch valve",
+          "next": "summary"
+        },
+        {
+          "label": "No — show me the 4-inch option anyway",
+          "next": "conflict_alt"
+        },
+        {
+          "label": "What is a pressure-independent valve?",
+          "next": "edu_picv"
+        }
+      ]
+    },
+    "conflict_alt": {
+      "bot": [
+        "Understood. The closest <b>4-inch</b> pressure-independent valve in this line is rated <b>0–55 GPM</b> — well above your stated <b>5 GPM</b>. Running it that far under its rated range isn't a supported configuration for accurate control.",
+        "If the 4-inch size is fixed because it has to match existing pipe, the usual fix is a <b>reducing PICV</b>: a 4-inch line connection stepping down to a correctly-sized valve body. That's exactly what the <b>3/4-inch option</b> does.",
+        "Want me to go with the 3/4-inch sized valve, or re-enter the flow rate?"
+      ],
+      "chips": [
+        {
+          "label": "Use the 3/4-inch valve",
+          "next": "summary"
+        },
+        {
+          "label": "Let me re-enter the flow rate",
+          "next": "ask_flow_rate",
+          "state": {
+            "_conflictPending": true
+          }
+        }
+      ]
+    },
+    "ask_flow_rate": {
+      "bot": [
+        "What's the actual flow rate for the 4-inch line? Type a number — for example, \"60 GPM\"."
+      ]
+    },
+    "summary": {
+      "bot": [
+        "Here's what I've captured before I pull the match:",
+        "✓ Application: <b>pressure-independent control valve</b> (stated)<br>✓ Medium: <b>water/glycol</b> (stated)<br>✓ Flow rate: <b>~5 GPM</b> (stated)<br>≈ Connection size: <b>3/4 in</b> (adjusted from your 4 in — see above)<br>✓ Actuator type: <b>modulating</b> (stated)<br>✓ Supply voltage: <b>24V AC/DC</b> (stated)<br>✓ Control signal: <b>modulating 2–10 VDC</b> (stated)<br>✓ Fail-safe action: <b>fail-in-place</b> (stated)<br>≈ Valve pattern: <b>2-way</b> (inferred — the only pattern this application and medium combination supports)",
+        "That's everything I need. Pulling the matching combination…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD002 — VRN2B006.00PX + MN7505A2209+3R",
+        "match": "Exact spec match",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "Matches pressure-independent, water/glycol, ~5 GPM, modulating, 24V AC/DC, 2–10 VDC, fail-in-place — exactly as specified.<br><br><b>Valve</b> VRN2B006.00PX — 2-way, 3/4 in FNPT, 0–6 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7505A2209+3R — non-spring return, modulating 2–10 Vdc, 24 Vac, fail-in-place, 2x aux switch, NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1313.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MN6105/MN7505 44 lb-in. DCA Specification Data (PDF) ↗</a> · <a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/datasheets/63-2632.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Product Data Sheet (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-in-place"
+      },
+      "chips": [
+        {
+          "label": "Show an alternative",
+          "next": "alternative"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        }
+      ]
+    },
+    "edu_failsafe": {
+      "bot": [
+        "Fail-safe action defines what the actuator does if it loses power or its control signal: <b>fail-in-place</b> holds the valve at its last position, <b>fail-safe closed</b> drives it fully shut, and <b>fail-safe open</b> drives it fully open.",
+        "It matters for what happens to your system during a power outage or wiring fault. <b>Fail-safe closed</b> is common when you want flow to stop on failure. <b>Fail-in-place</b> is common when interrupting flow could cause bigger problems, such as a freeze-protection loop losing circulation.<div style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/manuals-and-guides/installation-guides/63-2622.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Direct Coupled Actuator (DCA) Wiring Guide (PDF) ↗</a></div>"
+      ],
+      "chips": [
+        {
+          "label": "Change it to fail-safe closed now",
+          "next": "refine_failsafe_closed"
+        },
+        {
+          "label": "Got it, keep fail-in-place",
+          "next": "summary"
+        }
+      ]
+    },
+    "refine_failsafe_closed": {
+      "bot": [
+        "Updating the actuator — here's the swap: same valve, same modulating <b>2–10 VDC</b> signal and <b>24V AC/DC</b> supply. The difference: this actuator is <b>spring-return</b>, so on power loss it drives the valve fully <b>closed</b> instead of holding its last position."
+      ],
+      "rec": {
+        "name": "VRN2B006.00PX + MS7505A2130/U",
+        "match": "",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "<b>Valve</b> VRN2B006.00PX — unchanged: 2-way, 3/4 in FNPT, 0–6 GPM, 250°F max.<br><b>Actuator</b> MS7505A2130/U — spring return, modulating 2–10 Vdc, 24 Vac, <b>fail-safe closed</b>, 1x aux switch, matching NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1336.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MSxx03/MSxx05 Spring Return DCA Specification Data (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-safe-closed"
+      },
+      "chips": [
+        {
+          "label": "Back to fail-in-place",
+          "next": "summary"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule_fsc"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export_fsc"
+        }
+      ]
+    },
+    "alternative": {
+      "bot": [
+        "Two valid options for this spec — same size and actuator, different valve trim:"
+      ],
+      "recs": [
+        {
+          "name": "VRN2B006.00PX + MN7505A2209+3R (plated brass trim)",
+          "match": "Primary recommendation",
+          "price": "In stock · 3–5 business days",
+          "why": "Standard trim for closed-loop water/glycol systems.",
+          "imageKey": "valve"
+        },
+        {
+          "name": "VRN2B006.00SX + MN7505A2209+3R (stainless steel trim)",
+          "match": "Alternative — corrosion-resistant",
+          "price": "Made to order · 2–3 weeks",
+          "why": "Same sizing and actuator; recommended if the <b>glycol concentration</b> runs above ~40% or the loop sees frequent fresh-water makeup.",
+          "imageKey": "valve"
+        }
+      ],
+      "chips": [
+        {
+          "label": "Go with the brass trim",
+          "next": "summary"
+        },
+        {
+          "label": "Go with stainless",
+          "next": "alt_stainless_confirm"
+        }
+      ]
+    },
+    "alt_stainless_confirm": {
+      "bot": [
+        "Switched to the <b>stainless steel trim</b> valve — same 3/4 in, 0–6 GPM, 24V AC/DC modulating actuator, fail-in-place."
+      ],
+      "rec": {
+        "name": "VRN2B006.00SX + MN7505A2209+3R",
+        "match": "Stainless trim selected",
+        "price": "Made to order · 2–3 weeks",
+        "why": "Stainless steel trim, otherwise identical to the primary recommendation — 2-way, 3/4 in FNPT, 0–6 GPM, modulating 2–10 Vdc, 24 Vac, fail-in-place.",
+        "imageKey": "valve"
+      },
+      "chips": [
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        }
+      ]
+    },
+    "handoff_schedule": {
+      "bot": [
+        "Added to your schedule: <b>VRN2BHPXD002</b> — pressure-independent control valve + modulating actuator, 3/4 in, 0–6 GPM, 24V AC/DC, 2–10 VDC, fail-in-place.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        },
+        {
+          "label": "Start a new configuration",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "handoff_export": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nSKU: VRN2BHPXD002\nValve: VRN2B006.00PX — 2-way PICV, 3/4in FNPT, 0-6 GPM, brass trim, 250F, 360 psi\nActuator: MN7505A2209+3R — Modulating 2-10 Vdc, 24V AC/DC, Fail-in-place, NEMA 3R\nMedium: Water/glycol\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [
+        {
+          "label": "Done — start over",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "handoff_schedule_fsc": {
+      "bot": [
+        "Added to your schedule: <b>VRN2B006.00PX + MS7505A2130/U</b> — pressure-independent control valve + modulating actuator, 3/4 in, 0–6 GPM, 24V AC/DC, 2–10 VDC, <b>fail-safe closed</b>.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export_fsc"
+        },
+        {
+          "label": "Start a new configuration",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "handoff_export_fsc": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nValve: VRN2B006.00PX — 2-way PICV, 3/4in FNPT, 0-6 GPM, brass trim, 250F, 360 psi\nActuator: MS7505A2130/U — Modulating 2-10 Vdc, 24V AC/DC, Fail-safe Closed, NEMA 3R\nMedium: Water/glycol\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [
+        {
+          "label": "Done — start over",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "browsing": {
+      "bot": [
+        "No problem — I'm here whenever you're ready. Describe your requirement any time."
+      ],
+      "chips": [
+        {
+          "label": "Actually, let's try it",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "s2_ask_medium": {
+      "bot": [
+        "That's a good fit for an <b>automatic control valve and actuator</b> — it would hold steady flow to each machine without anyone manually tuning it. To match the right one, I'll need a few details about the loop.",
+        "First: what's circulating through it — plain water, or a <b>water/glycol</b> mix? I ask because glycol changes which valve materials and seals are compatible. It's usually called out on the loop's <b>P&amp;ID</b>, or on the label of whatever drum or tote you use to top off the system."
+      ],
+      "chips": [
+        {
+          "label": "Water/glycol",
+          "next": "s2_ask_flow",
+          "state": {
+            "medium": "Water/glycol"
+          }
+        },
+        {
+          "label": "Plain water",
+          "next": "s2_ask_flow",
+          "state": {
+            "medium": "Water"
+          }
+        }
+      ]
+    },
+    "s2_ask_flow": {
+      "bot": [
+        "Got it — <b>water/glycol</b> noted. Next: roughly how much flow does this branch need, in gallons per minute? That's what determines valve size, and it directly affects how tightly the loop can hold temperature. If you don't have the number offhand, it's usually readable off the <b>pump curve</b> or pump nameplate feeding this loop, or your process/facilities engineer may have it from the original equipment sizing."
+      ]
+    },
+    "s2_flow_size_flag": {
+      "bot": [
+        "That's useful, though pipe size and flow don't always scale together — a line can be run oversized for future capacity or only partly loaded. For two presses on a branch like this, flow is typically in the neighborhood of <b>~5 GPM</b>. Does that sound in the right range, or is that worth confirming against the pump curve before we lock it in? I'll mark it as an estimate either way.",
+        "Also, one thing to flag now: at around 5 GPM, a <b>4-inch</b> connection would actually be oversized for accurate control in this product line — it's built assuming a smaller body at that flow. A <b>3/4-inch</b> valve is the better match here; your team can step it down with a reducer at the 4-inch header if that's easier than re-piping. Does that work for your installation?"
+      ],
+      "chips": [
+        {
+          "label": "Switch to 3/4-inch",
+          "next": "s2_ask_control_type",
+          "state": {
+            "flow_rate": 5,
+            "connection_size": 0.75
+          }
+        },
+        {
+          "label": "Keep the 4-inch",
+          "next": "s2_keep_4in"
+        }
+      ]
+    },
+    "s2_keep_4in": {
+      "bot": [
+        "In this product line, connection size and flow are directly linked — a <b>4-inch</b> body is rated for roughly <b>55+ GPM</b>, so at ~5 GPM it wouldn't be modulating within an accurate control range. I can either walk back through the flow estimate with you, or we go with the correctly-sized <b>3/4-inch</b> valve and step down with a reducer at the header."
+      ],
+      "chips": [
+        {
+          "label": "Use 3/4-inch with a reducer",
+          "next": "s2_ask_control_type",
+          "state": {
+            "flow_rate": 5,
+            "connection_size": 0.75
+          }
+        },
+        {
+          "label": "Let's re-check the flow number",
+          "next": "s2_ask_flow"
+        }
+      ]
+    },
+    "s2_ask_control_type": {
+      "bot": [
+        "Next question: do you want this to just switch fully open or closed (<b>on/off</b>), or continuously adjust to hold a target flow or temperature (<b>modulating</b>)? You mentioned wanting it to self-adjust instead of someone manually tuning it, which points to modulating — just confirming that's the intent."
+      ],
+      "chips": [
+        {
+          "label": "Modulating",
+          "next": "s2_pitch_picv",
+          "state": {
+            "control_type": "Modulating",
+            "actuator_type": "Modulating actuator"
+          }
+        },
+        {
+          "label": "On/off",
+          "next": "s2_pitch_picv",
+          "state": {
+            "control_type": "On/off",
+            "actuator_type": "On/off actuator"
+          }
+        }
+      ]
+    },
+    "s2_pitch_picv": {
+      "bot": [
+        "One more thing worth raising: since this branch shares a header with other equipment, another zone opening or closing elsewhere on that header can throw off flow to your presses even with a normal control valve — that's a common cause of the inconsistent temperatures you mentioned. A <b>pressure-independent control valve (PICV)</b> is built specifically to prevent that: it holds steady flow to your machines regardless of what else on the loop is doing. Want me to include that in the recommendation?"
+      ]
+    },
+    "s2_ask_signal": {
+      "bot": [
+        "Now, how this talks to your plant controls: what supply voltage and control signal does your system use for a modulating device? Most plants I see use a <b>24V AC/DC</b> supply with a <b>2–10 VDC</b> control signal. That's usually documented in your <b>PLC I/O list</b>, or on the nameplate of whatever actuator you're replacing. If you're not certain, I can default to that as the standard and have your controls team confirm it during install."
+      ],
+      "chips": [
+        {
+          "label": "24V AC/DC · 2–10 VDC",
+          "next": "s2_ask_failsafe",
+          "state": {
+            "supply_voltage": "24V AC/DC",
+            "control_signal": "Modulating 2–10 VDC"
+          }
+        },
+        {
+          "label": "24V AC/DC · 4–20 mA",
+          "next": "s2_ask_failsafe",
+          "state": {
+            "supply_voltage": "24V AC/DC",
+            "control_signal": "Modulating 4–20 mA"
+          }
+        }
+      ]
+    },
+    "s2_ask_failsafe": {
+      "bot": [
+        "Last one: if power or the signal is ever lost, should the valve hold its current position, or move to a fixed safe position like fully closed? This is usually driven by your process safety requirements, so it's worth checking with whoever owns your safety documentation for this line if a brief loss of cooling would matter. If nothing critical happens during a short interruption, holding position (<b>fail-in-place</b>) is the common default — it avoids an abrupt process upset."
+      ],
+      "chips": [
+        {
+          "label": "Fail-in-place",
+          "next": "s2_summary",
+          "state": {
+            "fail_safe": "Fail-in-place"
+          }
+        },
+        {
+          "label": "Fail-safe closed",
+          "next": "s2_summary",
+          "state": {
+            "fail_safe": "Fail-safe closed"
+          }
+        }
+      ]
+    },
+    "s2_summary": {
+      "bot": [
+        "Here's what I've got:",
+        "Application: cooling loop feeding production equipment — based on your description<br>Medium: <b>water/glycol</b> — you confirmed<br>Valve type: <b>pressure-independent control valve</b> — recommended for the cross-zone interference you described, you confirmed<br>Control type: <b>modulating</b> — from \"self-adjust,\" you confirmed<br>Connection size: <b>3/4-inch</b> — recommended over your stated 4-inch based on flow, you confirmed<br>Flow rate: <b>~5 GPM</b> — estimated for a two-press branch, you confirmed it sounds right, flagged for pump curve verification<br>Power supply: <b>24V AC/DC</b> — standard default, you confirmed, flagged for controls team sign-off<br>Control signal: <b>2–10 VDC modulating</b> — standard default, same flag<br>Fail-safe action: <b>fail-in-place</b> — default for non-safety-critical service, you agreed",
+        "Pulling the matching combination…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD002 — VRN2B006.00PX + MN7505A2209+3R",
+        "match": "Recommended for your loop",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "This holds steady flow to both presses on that branch regardless of what else draws from the shared header — the interference behind the inconsistent temperatures you described. Sized for your ~5 GPM branch: a 3/4-inch pressure-independent valve stepped down from your 4-inch header with a standard reducer, modulating on a 24V AC/DC supply with a 2–10 VDC signal from your plant controls, holding position if power or signal is ever lost.<br><br><b>Valve</b> VRN2B006.00PX — 2-way, 3/4 in FNPT, 0–6 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7505A2209+3R — non-spring return, modulating 2–10 Vdc, 24 Vac, fail-in-place, 2x aux switch, NEMA 3R enclosure.<div data-citation style=\"margin-top:10px;padding-top:8px;border-top:1px solid var(--zv-color-border-soft,#D3D1C7);font-size:12px\"><a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/engineering-specifications/63-1313.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">MN6105/MN7505 44 lb-in. DCA Specification Data (PDF) ↗</a> · <a href=\"https://prod-edam.honeywell.com/content/dam/honeywell-edam/hbt/en-us/documents/literature-and-specs/datasheets/63-2632.pdf\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--zv-color-brand,#3596FF)\">Product Data Sheet (PDF) ↗</a></div>",
+        "imageKey": "actuator-fail-in-place"
+      },
+      "chips": [
+        {
+          "label": "Show an alternative",
+          "next": "alternative"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        }
+      ]
+    },
+    "s2_refine_failsafe_prompt": {
+      "bot": [
+        "That means switching to a fail-safe closed actuator instead of fail-in-place — same valve, no other changes. The trade-off is that a power loss would cut cooling to these presses entirely rather than holding wherever it was, which your safety team may be weighing against process risk either way. Want me to make that swap?"
+      ],
+      "chips": [
+        {
+          "label": "Yes, swap it",
+          "next": "refine_failsafe_closed"
+        },
+        {
+          "label": "No, keep it as it is",
+          "next": "s2_keep_failsafe_in_place"
+        },
+        {
+          "label": "Tell me more about possible risks",
+          "next": "s2_failsafe_risk_explainer"
+        }
+      ]
+    },
+    "s2_keep_failsafe_in_place": {
+      "bot": [
+        "Understood — staying with fail-in-place. No changes to the recommendation."
+      ],
+      "chips": [
+        {
+          "label": "Show an alternative",
+          "next": "alternative"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        }
+      ]
+    },
+    "s2_failsafe_risk_explainer": {
+      "bot": [
+        "Here's the trade-off in more detail: with <b>fail-in-place</b>, if power or the control signal is ever lost, the valve simply stays wherever it was — flow keeps moving, just without active control until power's restored. With <b>fail-safe closed</b>, that same loss drives the valve fully shut, so cooling to both presses stops immediately.",
+        "Neither is 'safer' in the abstract — it depends which failure mode your team would rather manage: an uncontrolled-but-flowing loop, or a hard stop that could trigger a shutdown or scrap on the presses. That's exactly the kind of call your safety or process engineering team would weigh against whatever process safety analysis (HAZOP or similar) exists for this line. Want me to make the swap to fail-safe closed, or keep it as fail-in-place?"
+      ],
+      "chips": [
+        {
+          "label": "Yes, swap it",
+          "next": "refine_failsafe_closed"
+        },
+        {
+          "label": "No, keep it as it is",
+          "next": "s2_keep_failsafe_in_place"
+        }
+      ]
+    },
+    "clarify_generic": {
+      "bot": [
+        "I can work with a partial description — tell me at least the <b>application</b> (pressure-independent or pressure-dependent), the <b>medium</b> (water/glycol or steam), and the <b>flow rate</b>, and I'll ask for anything else I still need."
+      ],
+      "chips": [
+        {
+          "label": "What information do I need to provide?",
+          "next": "edu_overview"
+        }
+      ]
+    },
+    "edu_overview": {
+      "bot": [
+        "Four things get you to a match fastest: <b>application type</b> (does the valve need to hold flow steady regardless of pressure changes elsewhere — pressure-independent — or not), <b>medium</b> (water/glycol or steam), <b>flow rate</b> (in GPM), and how you want it <b>controlled</b> (modulating for proportional control, or on/off). Everything else — connection size, control signal, supply voltage, fail-safe action — I can help you reason through once I know those four."
+      ],
+      "chips": [
+        {
+          "label": "Okay, let me describe my system",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "pdp_start": {
+      "bot": [
+        "You're looking at this configuration.",
+        "Want me to help refine it further?"
+      ],
+      "chips": [
+        {
+          "label": "Yes",
+          "next": "summary"
+        }
+      ]
+    }
+  },
+  "assistantName": "Zoe",
+  "ctxLabels": {
+    "plp": "AI assistant · Honeywell Building Automation",
+    "pdp": "AI assistant · Honeywell Building Automation"
+  }
+};
+
+  /* Product photos. Matching in _imageFor (scripts/zoe-engine.js) is a
+     substring test: it returns the first map key found INSIDE the
+     recommendation's imageKey string. Keys here are kept mutually
+     exclusive substrings (no key contains another) so that test can't
+     pick the wrong one. Three distinct photos: the valve, and one
+     actuator per fail-safe variant — matching conversation.json's
+     imageKey on `summary.rec` (fail-in-place) vs `refine_failsafe_closed.
+     rec` (fail-safe closed, reached via the "Change the actuator to
+     fail-safe closed" refinement). */
+  window.__IMAGE_MAP__ = {
+    valve: 'assets/img/valve.jpg',
+    'actuator-fail-in-place': 'assets/img/actuator-fail-in-place.jpeg',
+    'actuator-fail-safe-closed': 'assets/img/actuator-fail-safe-closed.jpeg'
+  };
+</script>
+
+<!-- ── The entire Zoe integration — one script tag. data-data is DELIBERATELY
+     omitted: it triggers a second async fetch that reassigns
+     window.__ZOE_FLOW__ to a brand-new object after zoe-engine.js has
+     already closed over the inlined one (see the script above) — breaking
+     every later in-place mutation of window.__ZOE_FLOW__ (honeywell-nlp.js's
+     dynamically-injected nodes) since it no longer shares a reference with
+     the engine's closure. Confirmed by reproducing the bug this session.
+     __INLINED_CONVERSATION__ alone is sufficient; nothing here needs
+     __ZOE_CONTEXT__/__SETTINGS__ from a fetched file. data-brand-name/
+     data-context-label are also dropped — grepping loader.js confirmed
+     neither attribute is actually read there, despite appearing in the
+     skill's supported_data_attrs table. Both omissions are filed as a
+     manifest/impl drift, not implemented as silent invented attributes. ── -->
+<script src="https://zoovu-mockup.vercel.app/embed/zoe/loader.js"
+        data-brand="honeywell"
+        data-mode="light"></script>
+
+<!-- Vertical-specific free-text routing — documented extension point,
+     see config/honeywell-nlp.js header comment. -->
+<script src="config/honeywell-nlp.js?v=6"></script>
+
+<!-- ── Sticky restyle (UI pass — conversation logic unchanged) ──────────
+     Per this session's decisions: keep the plain Zoe chat engine (already
+     built + verified end to end), restyle the shell into a persistent
+     bottom-center docked bar using the documented .is-sticky + .is-wedge
+     position/width modifiers (styles/zoe-widget.css §"Position modifier —
+     Sticky"), plus a project-local `.hw-docked` state (see
+     themes/honeywell.css "Bottom-center docked bar" for why this can't be
+     the canonical .is-sticky.docked — that rule targets the AI Companion
+     engine's DOM, not this one). No floating FAB at all: the bubble is
+     hidden permanently and the panel itself IS the collapsed affordance. -->
+<script>
+  window.addEventListener('load', function () {
+    if (window.navigateTo) window.navigateTo('plp');
+
+    var panel   = document.getElementById('zoeMockPanel');
+    var bubble  = document.getElementById('zoeMockBubble');
+    var body    = document.getElementById('zoeMockBody');
+    var head    = document.querySelector('.zoe-mock-head');
+    var input   = document.getElementById('zoeMockInput');
+    if (!panel || !body) return;
+
+    panel.classList.add('is-wedge', 'is-sticky');
+    if (bubble) bubble.classList.add('hidden');
+
+    /* ── Visibility / docked state machine ──────────────────────────
+       Three states, not two: hidden (nothing on screen — default at
+       session start), docked (header + composer, no bubble — revealed
+       by the banner CTA), expanded (full conversation). Overrides the
+       engine's late-bound open/close/minimize/expand thunks (the same
+       sanctioned pattern zoe-engine.js documents: "page scripts
+       re-assign window.openZoe/closeZoe AFTER the engine IIFE runs...
+       the wrapped version wins"). ── */
+    function resetConversation() {
+      body.innerHTML = '';
+      window.__hwReq = {};
+    }
+    function showDocked() {
+      panel.classList.add('open');
+      panel.classList.add('hw-docked');
+      panel.classList.remove('minimized');
+      if (bubble) bubble.classList.add('hidden');
+    }
+    function showExpanded() {
+      panel.classList.add('open');
+      panel.classList.remove('hw-docked', 'minimized');
+      if (bubble) bubble.classList.add('hidden');
+      /* Welcome message on first expand (fresh session or post-restart) —
+         only when the transcript is actually empty, never re-shown on
+         top of an in-progress conversation. */
+      if (body.childElementCount === 0 && window.__zoeGoTo) window.__zoeGoTo('plp_start');
+      requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
+    }
+    function hideAll() {
+      panel.classList.remove('open', 'hw-docked', 'minimized');
+      if (bubble) bubble.classList.add('hidden');
+      resetConversation();
+    }
+
+    /* Any open bespoke modal suppresses the engine's click-outside
+       auto-collapse. zoe-engine.js binds a capture-phase document
+       mousedown that calls window.minimizeZoe() for any click not inside
+       the panel — and our modals are appended to <body>, so opening or
+       closing one counted as "outside" and collapsed the chat behind it.
+       Registration order means we can't out-capture the engine's listener,
+       so the guard lives in the thunk it actually calls. The header
+       minimize button bypasses this by calling showDocked() directly. */
+    function modalOpen() { return !!document.querySelector('.hw-modal'); }
+
+    window.openZoe = showExpanded;
+    window.expandZoe = showExpanded;
+    window.minimizeZoe = function () { if (modalOpen()) return; showDocked(); };
+    /* Close = hide completely + restart session (per this round's spec) —
+       distinct from minimize, which only hides the transcript and keeps
+       history. Restart (the header ↻) is handled by a second listener
+       below, layered on top of the engine's own restart handler. */
+    window.closeZoe = function () { if (modalOpen()) return; hideAll(); };
+
+    /* Boots fully hidden — nothing renders until the banner CTA is
+       clicked. No bubble, no docked bar, no widget at all. */
+
+    if (head) head.addEventListener('click', function (e) {
+      if (!panel.classList.contains('hw-docked')) return;
+      if (e.target.closest('.zoe-head-actions')) return;
+      showExpanded();
+    });
+    if (input) input.addEventListener('focus', function () { showExpanded(); });
+
+    var cta = document.getElementById('hwZoeCta');
+    if (cta) cta.addEventListener('click', function () {
+      /* Reveals the docked bar only — no input.focus() here, since
+         focusing would immediately fire the focus listener above and
+         auto-expand, defeating the docked pause the designer asked for. */
+      showDocked();
+    });
+
+    /* Restart (↻) already clears the transcript and calls goTo(startStep())
+       in zoe-engine.js itself — this listener only adds the __hwReq reset
+       the engine doesn't know about, so a restart is a genuinely fresh
+       parse, not just a fresh transcript. */
+    var restartBtn = document.getElementById('zoeMockRestart');
+    if (restartBtn) restartBtn.addEventListener('click', function () { window.__hwReq = {}; });
+
+    /* Expand / minimize icon buttons — reuse the canonical
+       .zoe-head-actions > button pattern (generic selector, any direct
+       child button qualifies) so they inherit the existing icon-button
+       styling with zero new CSS beyond the show/hide toggle. */
+    var headActions = document.querySelector('.zoe-head-actions');
+    if (headActions && !document.getElementById('hwExpandBtn')) {
+      var expandBtn = document.createElement('button');
+      expandBtn.id = 'hwExpandBtn';
+      expandBtn.className = 'hw-expand-btn';
+      expandBtn.type = 'button';
+      expandBtn.title = 'Expand';
+      expandBtn.setAttribute('aria-label', 'Expand conversation');
+      expandBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>';
+      expandBtn.addEventListener('click', function (e) { e.stopPropagation(); showExpanded(); });
+
+      var minimizeBtn = document.createElement('button');
+      minimizeBtn.id = 'hwMinimizeBtn';
+      minimizeBtn.className = 'hw-minimize-btn';
+      minimizeBtn.type = 'button';
+      minimizeBtn.title = 'Minimize';
+      minimizeBtn.setAttribute('aria-label', 'Minimize conversation');
+      minimizeBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      minimizeBtn.addEventListener('click', function (e) { e.stopPropagation(); showDocked(); });
+
+      headActions.insertBefore(minimizeBtn, headActions.firstChild);
+      headActions.insertBefore(expandBtn, headActions.firstChild);
+    }
+
+    /* Copy overrides — invitational, non-demanding framing + AI Act
+       transparency (Art. 50: users must be clearly informed they're
+       talking to an AI system, at latest at first interaction) + a
+       persistent mistakes disclaimer under the composer. Text-only
+       edits to the canonical shell's existing elements — no new
+       components, no engine changes. */
+    var headLabel = document.getElementById('zoeHeadLabel');
+    if (headLabel) headLabel.innerHTML = "Let's talk about what you need";
+
+    if (input) input.placeholder = 'Tell us what you need';
+
+    var foot = document.querySelector('.zoe-mock-foot');
+    if (foot && !document.getElementById('hwAiDisclaimer')) {
+      var disclaimer = document.createElement('div');
+      disclaimer.id = 'hwAiDisclaimer';
+      disclaimer.setAttribute('role', 'note');
+      disclaimer.style.cssText = 'font-size:11px;color:var(--zv-color-text-muted,#5F5E5A);padding:6px 14px 10px;line-height:1.5';
+      disclaimer.textContent = "You're chatting with Zoe, an AI assistant. Responses may contain mistakes — verify critical specifications before ordering.";
+      foot.appendChild(disclaimer);
+    }
+
+    /* ── Bespoke modals ─────────────────────────────────────────────
+       No canonical modal component exists in this project's manifest, so
+       these are flagged as bespoke rather than passed off as library
+       standard. All three carry the shared `hw-modal` class, which the
+       modalOpen() guard above uses to suppress the engine's
+       click-outside auto-collapse while any of them is open. ── */
+    var BTN_PRIMARY = 'padding:11px 18px;border-radius:4px;border:0;background:#12203C;color:#fff;font-weight:700;font-size:13px;cursor:pointer';
+    var BTN_OUTLINE = 'padding:11px 18px;border-radius:4px;border:1px solid var(--zv-color-border,#E0E0E0);background:#fff;color:var(--zv-color-text,#1D1D1D);font-weight:600;font-size:13px;cursor:pointer';
+    /* Same #0071B3 as the send button + user bubble (themes/honeywell.css)
+       and the canonical rec-card "Add to Cart" (overridden there too) —
+       every Add to Cart surface reads as one action color. Distinct from
+       BTN_PRIMARY, which stays dark navy for Log in / Submit. */
+    var BTN_CART = 'padding:11px 18px;border-radius:4px;border:0;background:#0071B3;color:#fff;font-weight:700;font-size:13px;cursor:pointer';
+
+    function buildModal(opts) {
+      var prev = document.getElementById(opts.id);
+      if (prev) prev.remove();
+      var overlay = document.createElement('div');
+      overlay.id = opts.id;
+      overlay.className = 'hw-modal';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', opts.label);
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px';
+      overlay.innerHTML =
+        '<div style="background:var(--zv-color-surface,#fff);border-radius:6px;max-width:' + (opts.width || '420px') + ';width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--zv-shadow-xl,0 8px 24px rgba(0,0,0,.13));position:relative">' +
+          '<button type="button" data-modal-x aria-label="Close" style="position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;border:0;background:var(--zv-color-surface-alt,#F7F7F7);cursor:pointer;display:grid;place-items:center;color:var(--zv-color-text-secondary,#303030)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
+          opts.html +
+        '</div>';
+      document.body.appendChild(overlay);
+      function close() { overlay.remove(); }
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+      overlay.querySelector('[data-modal-x]').addEventListener('click', close);
+      overlay.__close = close;
+      return overlay;
+    }
+
+    /* Which handoff variant applies depends on the actuator currently
+       selected, so schedule/export routing reads the live parse state
+       rather than assuming the fail-in-place default. */
+    function isFsc() { return (window.__hwReq || {}).fail_safe === 'Fail-safe closed'; }
+
+    /* ── "Add to Cart" → sign-in gate. Replaces the canonical rec-card
+       default (closeZoe + navigateTo('pdp')). Intercepted capture-phase,
+       ahead of the engine's own bubble-phase listener bound directly to
+       the button inside _buildRecCard, so stopPropagation() prevents that
+       default firing at all. ── */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-act="cart"]');
+      if (!btn) return;
+      e.stopPropagation();
+      e.preventDefault();
+      showLoginModal();
+    }, true);
+
+    function showLoginModal() {
+      buildModal({
+        id: 'hwLoginModal',
+        label: 'Purchasing configured product',
+        width: '400px',
+        html:
+          '<div style="padding:32px 28px 28px;text-align:center">' +
+            '<h3 style="font-size:17px;font-weight:700;margin:0 0 10px;color:var(--zv-color-text,#1D1D1D)">Purchasing Configured Product</h3>' +
+            '<p style="font-size:13px;color:var(--zv-color-text-secondary,#303030);margin:0 0 22px;line-height:1.6">In order to add your configured products to your cart for purchase, please sign in to your account.</p>' +
+            '<button type="button" data-act="login" style="' + BTN_PRIMARY + ';width:100%">Log in</button>' +
+          '</div>'
+      });
+    }
+
+    /* ── "View details" → product preview modal. Reuses the card's own
+       already-rendered image/name/badge/price/why (the last of which
+       carries the citation footer) rather than re-deriving spec data —
+       one source of truth. ── */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-act="view"]');
+      if (!btn) return;
+      e.stopPropagation();
+      e.preventDefault();
+      var card = btn.closest('.zoe-rec');
+      if (card) showViewDetailsModal(card);
+    }, true);
+
+    function showViewDetailsModal(card) {
+      /* All photos in .top, not just the first — a combination card has
+         one image per physical product (see PAIRED_PHOTO above). */
+      var imgs = Array.prototype.slice.call(card.querySelectorAll('.top img'));
+      var name = card.querySelector('h4');
+      var badge = card.querySelector('.match');
+      var price = card.querySelector('.price');
+      var why = card.querySelector('.why');
+      var badgeHtml = (badge && badge.textContent.replace('★', '').trim() !== '')
+        ? '<div style="margin-bottom:10px">' + badge.outerHTML + '</div>' : '';
+      var imagesHtml = imgs.length
+        ? '<div style="display:flex;gap:10px;margin-bottom:16px">' +
+            imgs.map(function (i) {
+              return '<div style="flex:1;background:var(--zv-color-surface-alt,#F7F7F7);border-radius:4px;padding:14px;text-align:center"><img src="' + i.src + '" alt="" style="max-width:100%;max-height:130px;object-fit:contain" /></div>';
+            }).join('') +
+          '</div>'
+        : '';
+
+      var overlay = buildModal({
+        id: 'hwViewModal',
+        label: 'Product details',
+        width: '460px',
+        html:
+          '<div style="padding:18px 20px 14px;border-bottom:1px solid var(--zv-color-border,#E0E0E0)">' +
+            '<h3 style="font-size:15px;font-weight:700;margin:0;color:var(--zv-color-text,#1D1D1D)">Product details</h3>' +
+          '</div>' +
+          '<div style="padding:20px">' +
+            imagesHtml +
+            badgeHtml +
+            '<h4 style="font-size:16px;font-weight:700;margin:0 0 6px;color:var(--zv-color-text,#1D1D1D);line-height:1.35">' + (name ? name.textContent.trim() : '') + '</h4>' +
+            (price ? '<div style="font-size:13px;color:var(--zv-color-text-secondary,#303030);margin:0 0 14px">' + price.textContent.trim() + '</div>' : '') +
+            (why ? '<div style="font-size:13px;line-height:1.6;color:var(--zv-color-text-secondary,#303030)">' + why.innerHTML + '</div>' : '') +
+          '</div>' +
+          '<div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:8px">' +
+            '<button type="button" data-act="modal-cart" style="' + BTN_CART + '">Add to cart</button>' +
+            '<button type="button" data-act="modal-schedule" style="' + BTN_OUTLINE + '">Add to schedule</button>' +
+            '<button type="button" data-act="modal-export" style="' + BTN_OUTLINE + '">Export configuration summary</button>' +
+          '</div>'
+      });
+
+      overlay.querySelector('[data-act="modal-cart"]').addEventListener('click', function () {
+        overlay.__close();
+        showLoginModal();
+      });
+      overlay.querySelector('[data-act="modal-schedule"]').addEventListener('click', function () {
+        overlay.__close();
+        if (window.__zoeGoTo) window.__zoeGoTo(isFsc() ? 'handoff_schedule_fsc' : 'handoff_schedule');
+      });
+      overlay.querySelector('[data-act="modal-export"]').addEventListener('click', function () {
+        overlay.__close();
+        showExportFormModal();
+      });
+    }
+
+    /* ── "Export configuration summary" → gated download form, matching
+       Honeywell's own literature-download gate on buildings.honeywell.com.
+       No validation by design (demo). On submit the flow continues to the
+       matching handoff_export node so the summary lands in the chat. ── */
+    document.addEventListener('click', function (e) {
+      var chip = e.target.closest('.zoe-chip');
+      if (!chip) return;
+      if (chip.textContent.trim() !== 'Export configuration summary') return;
+      e.stopPropagation();
+      e.preventDefault();
+      showExportFormModal();
+    }, true);
+
+    function showExportFormModal() {
+      var INTERESTS = ['Building Management', 'Compliance', 'Cybersecurity', 'Energy Services',
+        'Fire and Life Safety', 'Multisite Building Management', 'Occupant Experience',
+        'Operational Efficiency', 'Resilience', 'Security', 'Services & Building Maintenance',
+        'Sustainability', 'Other'];
+      var WORK_WITH = ['I work directly with Honeywell Building Solutions.',
+        'I work with an authorized Honeywell partner', "I don't currently work with Honeywell"];
+
+      var LBL = 'display:block;font-size:12px;color:var(--zv-color-text,#1D1D1D);margin-bottom:5px';
+      var FLD = 'width:100%;box-sizing:border-box;padding:9px 10px;border:1px solid var(--zv-color-border-soft,#D3D1C7);border-radius:2px;font-family:inherit;font-size:13px;background:#fff;color:var(--zv-color-text,#1D1D1D)';
+      var REQ = '<span style="color:#c00">*</span>';
+
+      function text(label, req) {
+        return '<div><label style="' + LBL + '">' + label + ' ' + (req ? REQ : '') + '</label>' +
+               '<input type="text" style="' + FLD + '" /></div>';
+      }
+      function select(label, req) {
+        return '<div><label style="' + LBL + '">' + label + ' ' + (req ? REQ : '') + '</label>' +
+               '<select style="' + FLD + '"><option>Select...</option></select></div>';
+      }
+      function checks(items, name) {
+        return items.map(function (t) {
+          return '<label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.45;color:var(--zv-color-text-secondary,#303030);margin-bottom:7px">' +
+                 '<input type="checkbox" name="' + name + '" style="margin:2px 0 0;flex:0 0 auto" /><span>' + t + '</span></label>';
+        }).join('');
+      }
+
+      var overlay = buildModal({
+        id: 'hwExportModal',
+        label: 'Download configuration summary',
+        width: '520px',
+        html:
+          '<div style="padding:26px 28px 22px">' +
+            '<p style="font-size:13px;font-weight:700;text-align:center;margin:0 0 20px;color:var(--zv-color-text,#1D1D1D)">To download, please fill out and submit the form below</p>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-bottom:16px">' +
+              text('First Name:', 1) + text('Last Name:', 1) +
+              text('Business Email:', 1) + text('Telephone:', 1) +
+              text('Company Name:', 1) + select('Your Role:', 1) +
+              select('Country/Region:', 1) + text('Job Title:', 0) +
+            '</div>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+              '<div>' +
+                '<div style="font-size:12px;margin-bottom:8px;color:var(--zv-color-text,#1D1D1D)">' + REQ + ' Areas of interest: <span style="color:var(--zv-color-text-muted,#5F5E5A)">Please check all that apply:</span></div>' +
+                checks(INTERESTS, 'interest') +
+              '</div>' +
+              '<div>' +
+                '<label style="' + LBL + '">Further Details:</label>' +
+                '<textarea rows="3" style="' + FLD + ';resize:vertical;margin-bottom:14px"></textarea>' +
+                '<label style="display:flex;gap:8px;align-items:flex-start;font-size:11px;line-height:1.5;color:var(--zv-color-text-secondary,#303030)">' +
+                  '<input type="checkbox" style="margin:2px 0 0;flex:0 0 auto" />' +
+                  '<span>Want to hear more from Honeywell International Inc. and its affiliates? By checking this box, you agree to receive marketing e-communications, including updates about our offering, special offers, news and events. You can unsubscribe at any time.</span>' +
+                '</label>' +
+                '<p style="font-size:11px;line-height:1.5;color:var(--zv-color-text-secondary,#303030);margin:12px 0 0">By submitting this form, you consent to Honeywell\'s <a href="#" style="color:var(--zv-color-brand,#3596FF)">Terms &amp; Conditions</a> and understand Honeywell will process your personal information in accordance with its <a href="#" style="color:var(--zv-color-brand,#3596FF)">Privacy Policy</a>.</span></p>' +
+              '</div>' +
+            '</div>' +
+            '<div style="margin-top:18px">' +
+              '<div style="font-size:12px;margin-bottom:8px;color:var(--zv-color-text,#1D1D1D)">How do you work with Honeywell? ' + REQ + '</div>' +
+              checks(WORK_WITH, 'workwith') +
+            '</div>' +
+            '<button type="button" data-act="export-submit" style="' + BTN_PRIMARY + ';background:#0071B3;margin-top:18px;text-transform:uppercase;letter-spacing:.03em">Submit</button>' +
+          '</div>'
+      });
+
+      overlay.querySelector('[data-act="export-submit"]').addEventListener('click', function () {
+        overlay.__close();
+        if (window.__zoeGoTo) window.__zoeGoTo(isFsc() ? 'handoff_export_fsc' : 'handoff_export');
+      });
+    }
+
+    /* Second product photo per combination card — the engine's rec model
+       has one image slot, but a valve+actuator recommendation is two
+       physical parts. Keyed off the actuator photo's own filename rather
+       than a class/id (the engine's _buildRecCard gives every image the
+       same lack of markers), so it stays correct if more combos are
+       added later without touching this list per-node. */
+    var PAIRED_PHOTO = {
+      'actuator-fail-in-place': 'assets/img/valve.jpg',
+      'actuator-fail-safe-closed': 'assets/img/valve.jpg'
+    };
+
+    new MutationObserver(function () {
+      /* Hide star-only match badges (rec.match === "") — _buildRecCard
+         always renders '★ ' + rec.match regardless of whether match is
+         empty, so an empty string still leaves a bare star. Scoped to any
+         badge with no label text, not just one node, so it self-applies
+         to future empty-match recs too. */
+      document.querySelectorAll('.zoe-rec .match').forEach(function (el) {
+        if (el.textContent.replace('★', '').trim() === '') el.style.display = 'none';
+      });
+
+      /* Pair the second product photo into .top, once per card. */
+      document.querySelectorAll('.zoe-rec .top').forEach(function (top) {
+        if (top.dataset.hwPaired) return;
+        var img = top.querySelector('img');
+        if (!img) return;
+        var pairKey = Object.keys(PAIRED_PHOTO).filter(function (k) { return img.src.indexOf(k) !== -1; })[0];
+        if (pairKey) {
+          var second = document.createElement('img');
+          second.src = PAIRED_PHOTO[pairKey];
+          second.alt = '';
+          top.insertBefore(second, img); /* valve first, then the actuator */
+        }
+        top.dataset.hwPaired = '1';
+      });
+
+      /* Citation footer to the very bottom of the card, after the
+         Add to Cart / View details actions — _buildRecCard always
+         renders .actions right after .why, so a citation embedded in
+         the why string (see config/conversation.json) renders ABOVE the
+         buttons unless moved. Marked with data-citation so this only
+         ever touches the citation block, never the rest of .why. */
+      document.querySelectorAll('.zoe-rec [data-citation]').forEach(function (citation) {
+        var bodyEl = citation.closest('.body');
+        if (bodyEl && bodyEl.lastElementChild !== citation) bodyEl.appendChild(citation);
+      });
+    }).observe(body, { childList: true, subtree: true });
+  });
+</script>
+
+</body>
+</html>
