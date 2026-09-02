@@ -217,41 +217,185 @@
      engine owns scrolling internally via [data-aic-panel]. This project
      uses is-wedge only for the width modifier, with the plain Zoe chat
      DOM — so scroll ownership has to stay on .zoe-mock-body itself. */
-  padding: 32px 8px 8px;
+  padding: 32px 48px 8px;
+  /* The canonical is-wedge rule sets the overflow SHORTHAND to hidden
+     (both axes) — overriding only overflow-y here left overflow-x still
+     hidden, clipping the left edge of message bubbles (their border/
+     border-radius sits right at the scroll container's inner edge). */
+  overflow-x: visible;
   overflow-y: auto;
 }
+:root[data-theme="honeywell"] .zoe-msg {
+  max-width: 640px;
+}
+/* The canonical bot bubble rule sets a 1px border on all sides, then
+   separately overrides border-left with --zoe-bubble-bot-accent-width
+   SOLID --zoe-bubble-bot-accent-color (an opt-in colored accent stripe
+   for brands that want one) — Honeywell never sets those tokens, so
+   accent-width defaults to 0 (silently zeroing the left border's WIDTH,
+   not just its color) and accent-color defaults to the brand blue.
+   Overriding width alone left that blue color in place once width was
+   restored. Override the full border-left so it matches the other
+   three sides exactly, with no colored accent. */
+:root[data-theme="honeywell"] .zoe-msg.bot .bub {
+  border-left: 1px solid var(--zv-color-border, #E0E0E0);
+}
 
-/* ── Bottom-center docked bar (BESPOKE — see clients/honeywell-zoe/README.md
-   "Known limitations"). The canonical .is-sticky.docked collapse targets
-   .aic-panel__body (AI Companion's own DOM); this panel uses the plain Zoe
-   chat DOM (.zoe-mock-body / .zoe-mock-foot), which has no equivalent
-   canonical collapse rule at any viewport. `.hw-docked` is a project-local
-   class, toggled by index.html's inline script, that hides the transcript
-   and shrinks the panel to header + composer only. Candidate for promoting
-   into zoe-widget.css as a real .is-sticky.docked rule for the plain
-   chat engine, not just the AI Companion one. */
-:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked {
-  height: auto;
-  min-height: 0;
+/* ── Full-page Zoe takeover (BESPOKE — v1.1). Replaces the earlier
+   bottom-center docked-bar design (see git history / the original
+   README "Known limitations" for that approach). No canonical
+   "page"/takeover variant exists for the plain Zoe engine (per the
+   manifest, only ai-companion ships floater/inline/page — widget_shell.
+   variants for plain zoe is just is-sticky/is-wedge). `.hw-zoe-page` is
+   a project-local position/size modifier on the SAME canonical
+   .zoe-mock-panel shell + engine: index.html's script moves the panel
+   out of <body> and into an in-flow mount point in place of .hw-main
+   (the "Field Devices" title + grid) instead of floating it as a fixed
+   overlay. Candidate for promoting into zoe-widget.css as a real
+   .is-page variant for the plain Zoe engine via the living loop,
+   mirroring what ai-companion already has. */
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page {
+  position: relative;
+  top: auto; right: auto; bottom: auto; left: auto; translate: none;
+  width: 100%;
+  max-width: 1136px;
+  margin: 0 auto 40px;
+  /* Canonical .zoe-mock-panel always carries --zv-shadow-xl (a heavy
+     drop shadow meant for a floating overlay widget) and --zoe-panel-
+     border (1px solid var(--zv-color-border)) wrapping the whole
+     head+body+foot stack — with no floating widget any more, both read
+     as a card boxed/hovering over the page instead of embedded content. */
+  box-shadow: none;
+  border: none;
+  height: 640px;
   max-height: none;
+  transform-origin: top center;
 }
-:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .zoe-mock-body {
+@media (max-width: 640px) {
+  :root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page {
+    height: calc(100dvh - 220px);
+  }
+}
+
+/* ── Figma reference restyle (v1.1) ─────────────────────────────────────
+   Ref: figma.com/design/M9mJ4W6J77PI3Rny7zhygs "Honeywell product
+   selector", node 2078:1347 ("1.1 — Scenario 1: conversation at
+   recommendation state"). Message bubbles, in-chat suggested-response
+   chips and the panel radius already matched this reference via the
+   existing tokens above (--zv-radius-md, --zoe-bubble-user-bg, the
+   --zoe-chip-* defaults) — the pieces below are the ones that didn't:
+   the head subtitle, the header icon glyphs, and the composer, which
+   the reference wraps — chip tray AND input row together — in one
+   bordered, rounded box, unlike the canonical unbordered foot +
+   separately-bordered pill input. */
+
+/* Head: subtitle is plain text in the reference, not a background pill. */
+:root[data-theme="honeywell"] .zoe-mock-head .ctx {
+  background: transparent;
+  padding: 0;
+  margin-top: 2px;
+  color: #5F5F5F;
+  font-size: 12px;
+  text-transform: none;
+}
+:root[data-theme="honeywell"] .zoe-mock-head .who b {
+  font-size: 16px;
+}
+/* Restart/close (canonical SVG icons) + our own minimize button all
+   render as plain glyph characters in the reference — index.html's
+   script swaps their innerHTML to match; this just sizes the glyph. */
+:root[data-theme="honeywell"] .zoe-mock-head .zoe-head-actions > button {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Composer: chip tray + input row live inside ONE bordered, rounded
+   box (reference: border ~brand blue, radius ~10px) instead of the
+   canonical unbordered foot with its own border-top. */
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-mock-foot {
+  border: 1.5px solid var(--zv-color-brand);
+  border-radius: 10px;
+  margin: 0 16px 16px;
+  padding: 14px 16px;
+  background: var(--zv-color-surface);
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-input-wrap {
+  border: none;
+  background: transparent;
+  padding: 0;
+  gap: 8px;
+}
+/* Canonical a11y rule (zoe-widget.css §"Focus-visible") puts the focus
+   ring on the WHOLE form via :focus-within, which read as the entire
+   composer row "activating" once the wrap lost its own border (nothing
+   left to visually separate wrap from field). Move the ring onto the
+   input itself, which now owns its own border in this layout. */
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-input-wrap:focus-within {
+  box-shadow: none;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-input-wrap input {
+  border: 1px solid var(--zv-color-border, #E0E0E0);
+  border-radius: 4px;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-input-wrap input:focus {
+  outline: none;
+  border-color: var(--zv-color-brand);
+  box-shadow: var(--zv-focus-shadow-soft, 0 0 0 3px rgba(53, 150, 255, .25));
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-input-wrap input::placeholder {
+  color: #8C8C8C;
+  font-style: normal;
+}
+:root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-send {
+  width: auto;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+
+/* ── Persistent "decided so far" chip tray (BESPOKE — v1.1) ────────────
+   No canonical class covers a non-interactive recognized-attribute
+   summary strip — every canonical .zoe-chip is an interactive
+   suggested-response button, a different thing. Sits above the input
+   row, inside the same bordered box (see .zoe-mock-foot above);
+   index.html's script adds one chip per attribute the moment Zoe locks
+   it in, from free text or a clicked suggested response, so the
+   visitor never has to scroll back up to see what's already decided.
+   Styled per the reference: light brand-tinted fill, brand-blue border. */
+:root[data-theme="honeywell"] .hw-chip-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 0 10px;
+}
+:root[data-theme="honeywell"] .hw-chip-tray:empty {
   display: none;
+  padding: 0;
 }
-:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .zoe-mock-foot {
-  border-top: none;
+:root[data-theme="honeywell"] .hw-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--zv-color-brand) 12%, white);
+  border: 1px solid var(--zv-color-brand);
+  color: var(--zv-color-text, #1D1D1D);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
 }
-:root[data-theme="honeywell"] .hw-expand-btn,
-:root[data-theme="honeywell"] .hw-minimize-btn {
-  width: var(--zv-size-3, 32px); height: var(--zv-size-3, 32px); border: 0; background: transparent;
-  cursor: pointer; color: var(--zoe-head-action-color, currentColor);
-  display: grid; place-items: center; transition: all .15s;
+
+/* Recommendation card photos: reference uses 80px-wide, cover-fit,
+   unpadded thumbnails (vs. the previous 96px contain+padding). */
+:root[data-theme="honeywell"] .zoe-rec .top {
+  flex-basis: 80px;
 }
-:root[data-theme="honeywell"] .hw-expand-btn:hover,
-:root[data-theme="honeywell"] .hw-minimize-btn:hover {
-  background: var(--zoe-head-action-hover-bg, rgba(255,255,255,.15));
-}
-:root[data-theme="honeywell"] .zoe-mock-panel.hw-docked .hw-minimize-btn,
-:root[data-theme="honeywell"] .zoe-mock-panel:not(.hw-docked) .hw-expand-btn {
-  display: none;
+:root[data-theme="honeywell"] .zoe-rec .top img {
+  width: 80px;
+  object-fit: cover;
+  padding: 0;
 }

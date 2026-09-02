@@ -7,7 +7,7 @@
 
 <!-- Client host page — hand-built replica of buildings.honeywell.com's
      "Field Devices" category page (see config/brand.json for provenance). -->
-<link rel="stylesheet" href="host.css?v=3" />
+<link rel="stylesheet" href="host.css?v=5" />
 
 <!-- Canonical Zoovu CSS — linked, never inlined. -->
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/tokens.css" />
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/zoe-widget.css" />
 
 <!-- Client theme — the only brand-fill file, local to this mockup. -->
-<link rel="stylesheet" href="themes/honeywell.css?v=6" />
+<link rel="stylesheet" href="themes/honeywell.css?v=11" />
 </head>
 <body>
 
@@ -69,14 +69,10 @@
     <div class="hw-promo-form">
       <div class="hw-promo-form-field">
         <label>Select a Product Type</label>
-        <select><option>Select</option><option>Valves and Actuators</option></select>
+        <select id="hwProductType"><option>Select</option><option>Valves and Actuators</option></select>
       </div>
-      <button class="hw-configure-btn" disabled>CONFIGURE NOW</button>
+      <button class="hw-configure-btn" id="hwConfigureBtn" disabled>CONFIGURE NOW</button>
     </div>
-    <div class="hw-promo-divider">or</div>
-    <button class="hw-zoe-cta" id="hwZoeCta" type="button">
-      <span class="spark">✦</span> Describe what you need here
-    </button>
   </div>
 </div>
 
@@ -718,63 +714,33 @@
      see config/honeywell-nlp.js header comment. -->
 <script src="config/honeywell-nlp.js?v=6"></script>
 
-<!-- ── Sticky restyle (UI pass — conversation logic unchanged) ──────────
-     Per this session's decisions: keep the plain Zoe chat engine (already
-     built + verified end to end), restyle the shell into a persistent
-     bottom-center docked bar using the documented .is-sticky + .is-wedge
-     position/width modifiers (styles/zoe-widget.css §"Position modifier —
-     Sticky"), plus a project-local `.hw-docked` state (see
-     themes/honeywell.css "Bottom-center docked bar" for why this can't be
-     the canonical .is-sticky.docked — that rule targets the AI Companion
-     engine's DOM, not this one). No floating FAB at all: the bubble is
-     hidden permanently and the panel itself IS the collapsed affordance. -->
+<!-- ── Full-page restyle (v1.1) ──────────────────────────────────────
+     Replaces the earlier bottom-center docked-bar design. Keeps the
+     plain Zoe chat engine (already built + verified end to end);
+     opens full-page in place of .hw-main (the "Field Devices" title +
+     grid) via the project-local `.hw-zoe-page` modifier — see
+     themes/honeywell.css for why this can't be a canonical variant.
+     Entry point is the promo banner's own dropdown + Configure Now
+     button (no separate always-visible CTA any more): selecting
+     "Valves and Actuators" and clicking Configure Now opens a choice
+     modal — step-by-step redirects to the real Honeywell configurator,
+     "describe what I need" opens Zoe full-page. -->
 <script>
   window.addEventListener('load', function () {
-    if (window.navigateTo) window.navigateTo('plp');
+    var panel      = document.getElementById('zoeMockPanel');
+    var bubble     = document.getElementById('zoeMockBubble');
+    var body       = document.getElementById('zoeMockBody');
+    var input      = document.getElementById('zoeMockInput');
+    var form       = document.getElementById('zoeMockForm');
+    var restartBtn = document.getElementById('zoeMockRestart');
+    var headActions = document.querySelector('.zoe-head-actions');
 
-    var panel   = document.getElementById('zoeMockPanel');
-    var bubble  = document.getElementById('zoeMockBubble');
-    var body    = document.getElementById('zoeMockBody');
-    var head    = document.querySelector('.zoe-mock-head');
-    var input   = document.getElementById('zoeMockInput');
-    if (!panel || !body) return;
-
-    panel.classList.add('is-wedge', 'is-sticky');
-    if (bubble) bubble.classList.add('hidden');
-
-    /* ── Visibility / docked state machine ──────────────────────────
-       Three states, not two: hidden (nothing on screen — default at
-       session start), docked (header + composer, no bubble — revealed
-       by the banner CTA), expanded (full conversation). Overrides the
-       engine's late-bound open/close/minimize/expand thunks (the same
-       sanctioned pattern zoe-engine.js documents: "page scripts
-       re-assign window.openZoe/closeZoe AFTER the engine IIFE runs...
-       the wrapped version wins"). ── */
-    function resetConversation() {
-      body.innerHTML = '';
-      window.__hwReq = {};
-    }
-    function showDocked() {
-      panel.classList.add('open');
-      panel.classList.add('hw-docked');
-      panel.classList.remove('minimized');
-      if (bubble) bubble.classList.add('hidden');
-    }
-    function showExpanded() {
-      panel.classList.add('open');
-      panel.classList.remove('hw-docked', 'minimized');
-      if (bubble) bubble.classList.add('hidden');
-      /* Welcome message on first expand (fresh session or post-restart) —
-         only when the transcript is actually empty, never re-shown on
-         top of an in-progress conversation. */
-      if (body.childElementCount === 0 && window.__zoeGoTo) window.__zoeGoTo('plp_start');
-      requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
-    }
-    function hideAll() {
-      panel.classList.remove('open', 'hw-docked', 'minimized');
-      if (bubble) bubble.classList.add('hidden');
-      resetConversation();
-    }
+    var hwMain = document.querySelector('.hw-main');
+    var hwPromo = document.querySelector('.hw-promo');
+    var zoeMount = document.createElement('div');
+    zoeMount.id = 'hwZoeMount';
+    zoeMount.style.display = 'none';
+    if (hwMain && hwMain.parentNode) hwMain.parentNode.insertBefore(zoeMount, hwMain.nextSibling);
 
     /* Any open bespoke modal suppresses the engine's click-outside
        auto-collapse. zoe-engine.js binds a capture-phase document
@@ -782,99 +748,62 @@
        the panel — and our modals are appended to <body>, so opening or
        closing one counted as "outside" and collapsed the chat behind it.
        Registration order means we can't out-capture the engine's listener,
-       so the guard lives in the thunk it actually calls. The header
-       minimize button bypasses this by calling showDocked() directly. */
+       so the guard lives in the thunks it actually calls. */
     function modalOpen() { return !!document.querySelector('.hw-modal'); }
 
-    window.openZoe = showExpanded;
-    window.expandZoe = showExpanded;
-    window.minimizeZoe = function () { if (modalOpen()) return; showDocked(); };
-    /* Close = hide completely + restart session (per this round's spec) —
-       distinct from minimize, which only hides the transcript and keeps
-       history. Restart (the header ↻) is handled by a second listener
-       below, layered on top of the engine's own restart handler. */
-    window.closeZoe = function () { if (modalOpen()) return; hideAll(); };
-
-    /* Boots fully hidden — nothing renders until the banner CTA is
-       clicked. No bubble, no docked bar, no widget at all. */
-
-    if (head) head.addEventListener('click', function (e) {
-      if (!panel.classList.contains('hw-docked')) return;
-      if (e.target.closest('.zoe-head-actions')) return;
-      showExpanded();
-    });
-    if (input) input.addEventListener('focus', function () { showExpanded(); });
-
-    var cta = document.getElementById('hwZoeCta');
-    if (cta) cta.addEventListener('click', function () {
-      /* Reveals the docked bar only — no input.focus() here, since
-         focusing would immediately fire the focus listener above and
-         auto-expand, defeating the docked pause the designer asked for. */
-      showDocked();
-    });
-
-    /* Restart (↻) already clears the transcript and calls goTo(startStep())
-       in zoe-engine.js itself — this listener only adds the __hwReq reset
-       the engine doesn't know about, so a restart is a genuinely fresh
-       parse, not just a fresh transcript. */
-    var restartBtn = document.getElementById('zoeMockRestart');
-    if (restartBtn) restartBtn.addEventListener('click', function () { window.__hwReq = {}; });
-
-    /* Expand / minimize icon buttons — reuse the canonical
-       .zoe-head-actions > button pattern (generic selector, any direct
-       child button qualifies) so they inherit the existing icon-button
-       styling with zero new CSS beyond the show/hide toggle. */
-    var headActions = document.querySelector('.zoe-head-actions');
-    if (headActions && !document.getElementById('hwExpandBtn')) {
-      var expandBtn = document.createElement('button');
-      expandBtn.id = 'hwExpandBtn';
-      expandBtn.className = 'hw-expand-btn';
-      expandBtn.type = 'button';
-      expandBtn.title = 'Expand';
-      expandBtn.setAttribute('aria-label', 'Expand conversation');
-      expandBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>';
-      expandBtn.addEventListener('click', function (e) { e.stopPropagation(); showExpanded(); });
-
-      var minimizeBtn = document.createElement('button');
-      minimizeBtn.id = 'hwMinimizeBtn';
-      minimizeBtn.className = 'hw-minimize-btn';
-      minimizeBtn.type = 'button';
-      minimizeBtn.title = 'Minimize';
-      minimizeBtn.setAttribute('aria-label', 'Minimize conversation');
-      minimizeBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-      minimizeBtn.addEventListener('click', function (e) { e.stopPropagation(); showDocked(); });
-
-      headActions.insertBefore(minimizeBtn, headActions.firstChild);
-      headActions.insertBefore(expandBtn, headActions.firstChild);
+    function resetConversation() {
+      if (body) body.innerHTML = '';
+      window.__hwReq = {};
+      if (typeof renderChipTray === 'function') renderChipTray();
     }
 
-    /* Copy overrides — invitational, non-demanding framing + AI Act
-       transparency (Art. 50: users must be clearly informed they're
-       talking to an AI system, at latest at first interaction) + a
-       persistent mistakes disclaimer under the composer. Text-only
-       edits to the canonical shell's existing elements — no new
-       components, no engine changes. */
-    var headLabel = document.getElementById('zoeHeadLabel');
-    if (headLabel) headLabel.innerHTML = "Let's talk about what you need";
-
-    if (input) input.placeholder = 'Tell us what you need';
-
-    var foot = document.querySelector('.zoe-mock-foot');
-    if (foot && !document.getElementById('hwAiDisclaimer')) {
-      var disclaimer = document.createElement('div');
-      disclaimer.id = 'hwAiDisclaimer';
-      disclaimer.setAttribute('role', 'note');
-      disclaimer.style.cssText = 'font-size:11px;color:var(--zv-color-text-muted,#5F5E5A);padding:6px 14px 10px;line-height:1.5';
-      disclaimer.textContent = "You're chatting with Zoe, an AI assistant. Responses may contain mistakes — verify critical specifications before ordering.";
-      foot.appendChild(disclaimer);
+    function openFullPage() {
+      if (!panel || !body) {
+        console.error('[hw] Zoe engine assets did not load (blocked by a tracker/ad blocker, or the CDN is unreachable) — cannot open the configuration assistant.');
+        return;
+      }
+      if (hwMain) hwMain.style.display = 'none';
+      if (hwPromo) hwPromo.style.display = 'none';
+      zoeMount.style.display = '';
+      zoeMount.appendChild(panel);
+      panel.classList.add('is-wedge', 'hw-zoe-page', 'open');
+      if (bubble) bubble.classList.add('hidden');
+      /* Welcome message on first open (fresh session or post-restart) —
+         only when the transcript is actually empty, never re-shown on
+         top of an in-progress conversation. */
+      if (body.childElementCount === 0 && window.__zoeGoTo) window.__zoeGoTo('plp_start');
+      zoeMount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
     }
+    function hideFullPage() {
+      zoeMount.style.display = 'none';
+      if (hwMain) hwMain.style.display = '';
+      if (hwPromo) hwPromo.style.display = '';
+      if (panel) {
+        panel.classList.remove('open');
+        document.body.appendChild(panel);
+      }
+    }
+
+    /* Minimize: hide the panel, keep the conversation — reopening (via
+       Configure Now → describe-what-I-need) resumes where it left off.
+       Close: hide the panel AND reset — a genuinely fresh session next
+       time, matching the header's × vs − distinction. */
+    window.openZoe = openFullPage;
+    window.expandZoe = openFullPage;
+    window.minimizeZoe = function () { if (modalOpen()) return; hideFullPage(); };
+    window.closeZoe = function () { if (modalOpen()) return; hideFullPage(); resetConversation(); };
 
     /* ── Bespoke modals ─────────────────────────────────────────────
        No canonical modal component exists in this project's manifest, so
        these are flagged as bespoke rather than passed off as library
-       standard. All three carry the shared `hw-modal` class, which the
+       standard. All carry the shared `hw-modal` class, which the
        modalOpen() guard above uses to suppress the engine's
-       click-outside auto-collapse while any of them is open. ── */
+       click-outside auto-collapse while any of them is open. Defined
+       UNCONDITIONALLY, before the Zoe-availability guard further down —
+       the "step by step configurator" option is a plain redirect that
+       needs no Zoe engine at all, so Configure Now shouldn't be hostage
+       to the canonical embed script failing to load. ── */
     var BTN_PRIMARY = 'padding:11px 18px;border-radius:4px;border:0;background:#12203C;color:#fff;font-weight:700;font-size:13px;cursor:pointer';
     var BTN_OUTLINE = 'padding:11px 18px;border-radius:4px;border:1px solid var(--zv-color-border,#E0E0E0);background:#fff;color:var(--zv-color-text,#1D1D1D);font-weight:600;font-size:13px;cursor:pointer';
     /* Same #0071B3 as the send button + user bubble (themes/honeywell.css)
@@ -905,6 +834,164 @@
       overlay.__close = close;
       return overlay;
     }
+
+    /* ── "How would you like to configure your products?" modal ────────
+       Wired to the promo banner's own Select-a-Product-Type dropdown +
+       Configure Now button (both further up this page) — only Valves
+       and Actuators has a real Zoe conversation behind it. ── */
+    window.__hwOpenConfigureModal = function () {
+      var overlay = buildModal({
+        id: 'hwConfigureChoiceModal',
+        label: 'How would you like to configure your products?',
+        width: '460px',
+        html:
+          '<div style="padding:30px 26px 26px">' +
+            '<h3 style="font-size:16px;font-weight:700;margin:0 0 20px;color:var(--zv-color-text,#1D1D1D)">How would you like to configure your products?</h3>' +
+            '<div style="display:flex;flex-direction:column;gap:10px">' +
+              '<button type="button" data-act="self-configure" style="' + BTN_OUTLINE + ';width:100%;text-align:left">Myself with a step by step configurator</button>' +
+              '<button type="button" data-act="ask-zoe" style="' + BTN_CART + ';width:100%;text-align:left;display:flex;align-items:center;gap:8px"><span aria-hidden="true">✦</span> I&rsquo;d like to describe what I need and have it configured</button>' +
+            '</div>' +
+          '</div>'
+      });
+      overlay.querySelector('[data-act="self-configure"]').addEventListener('click', function () {
+        window.location.href = 'https://buildings.honeywell.com/us/en/products/select-products?zv-selector-type=valves-and-actuators';
+      });
+      overlay.querySelector('[data-act="ask-zoe"]').addEventListener('click', function () {
+        overlay.__close();
+        openFullPage();
+      });
+    };
+
+    var typeSelect = document.getElementById('hwProductType');
+    var configureBtn = document.getElementById('hwConfigureBtn');
+    if (typeSelect && configureBtn) {
+      typeSelect.addEventListener('change', function () {
+        configureBtn.disabled = (typeSelect.value !== 'Valves and Actuators');
+      });
+      configureBtn.addEventListener('click', function () {
+        if (typeSelect.value === 'Valves and Actuators') window.__hwOpenConfigureModal();
+      });
+    }
+
+    if (!panel || !body) return;
+
+    if (bubble) bubble.classList.add('hidden');
+
+    /* Restart (↻) already clears the transcript and calls goTo(startStep())
+       in zoe-engine.js itself — this listener only adds the __hwReq +
+       chip-tray reset the engine doesn't know about, so a restart is a
+       genuinely fresh parse, not just a fresh transcript. */
+    if (restartBtn) restartBtn.addEventListener('click', function () {
+      window.__hwReq = {};
+      renderChipTray();
+    });
+
+    /* No minimize button in the header any more — window.minimizeZoe
+       stays defined (still used by the engine's click-outside-collapse
+       behavior), just nothing in the header triggers it directly. */
+
+    /* Restart (↻) / Close (✕) ship as SVG icons in the canonical shell;
+       the Figma reference renders them as plain glyph characters —
+       text-only swap, same buttons/handlers, no engine changes. */
+    var restartGlyphBtn = document.getElementById('zoeMockRestart');
+    if (restartGlyphBtn) restartGlyphBtn.textContent = '↻';
+    var closeGlyphBtn = document.getElementById('zoeMockClose');
+    if (closeGlyphBtn) closeGlyphBtn.textContent = '✕';
+
+    /* Copy overrides — matches the target style/copy for this surface.
+       Text-only edits to the canonical shell's existing elements — no
+       new components, no engine changes. Plus the AI Act transparency
+       disclaimer (Art. 50: users must be clearly informed they're
+       talking to an AI system, at latest at first interaction). */
+    var headLabel = document.getElementById('zoeHeadLabel');
+    if (headLabel) headLabel.textContent = "Tell us what you're trying to configure";
+    var ctxLabel = document.getElementById('zoeCtx');
+    if (ctxLabel) ctxLabel.textContent = 'Honeywell Configuration Assistant · Find the right fit for how your building works.';
+    if (input) input.placeholder = 'Tell us what you need';
+
+    var foot = document.querySelector('.zoe-mock-foot');
+    if (foot && !document.getElementById('hwAiDisclaimer')) {
+      var disclaimer = document.createElement('div');
+      disclaimer.id = 'hwAiDisclaimer';
+      disclaimer.setAttribute('role', 'note');
+      disclaimer.style.cssText = 'font-size:11px;color:var(--zv-color-text-muted,#5F5E5A);padding:6px 14px 10px;line-height:1.5;text-align:center';
+      disclaimer.textContent = "You're chatting with Zoe, an AI assistant. Responses may contain mistakes — verify critical specifications before ordering.";
+      foot.appendChild(disclaimer);
+    }
+
+    /* ── Persistent "decided so far" chip tray (BESPOKE) ────────────────
+       One chip per attribute Zoe has locked into window.__hwReq — added
+       the moment it's set, whether that came from free text
+       (window._routeFreeText) or a clicked suggested response
+       (window.applyZoeFilter). Both are wrapped here rather than edited
+       in config/honeywell-nlp.js, per the engine's own late-binding
+       override pattern (whichever function is assigned to
+       window.applyZoeFilter / window._routeFreeText at CALL time wins —
+       confirmed in scripts/zoe-engine.js). */
+    var chipTray = document.createElement('div');
+    chipTray.className = 'hw-chip-tray';
+    chipTray.id = 'hwChipTray';
+    if (foot) foot.insertBefore(chipTray, form || foot.firstChild);
+
+    var CHIP_ORDER = ['application', 'medium', 'flow_rate', 'connection_size',
+      'control_type', 'actuator_type', 'supply_voltage', 'control_signal',
+      'fail_safe', 'valve_pattern'];
+    var CHIP_FORMAT = {
+      flow_rate: function (v) { return v + ' GPM'; },
+      connection_size: function (v) { return v + '-inch connection'; }
+    };
+    var chipEls = {};
+    function chipLabel(key, value) {
+      var fmt = CHIP_FORMAT[key];
+      return typeof fmt === 'function' ? fmt(value) : String(value);
+    }
+    function renderChipTray() {
+      var req = window.__hwReq || {};
+      Object.keys(chipEls).forEach(function (k) {
+        if (req[k] == null || req[k] === '') { chipEls[k].remove(); delete chipEls[k]; }
+      });
+      CHIP_ORDER.forEach(function (key) {
+        var val = req[key];
+        if (val == null || val === '') return;
+        var text = chipLabel(key, val);
+        if (chipEls[key]) {
+          if (chipEls[key].textContent !== text) chipEls[key].textContent = text;
+          return;
+        }
+        var chip = document.createElement('span');
+        chip.className = 'hw-chip';
+        chip.textContent = text;
+        chipTray.appendChild(chip);
+        chipEls[key] = chip;
+      });
+    }
+
+    /* NOT wrapping "whatever window.applyZoeFilter currently is" here —
+       honeywell-nlp.js assigns its real merge-into-__hwReq implementation
+       synchronously during page parse, but zoe-engine.js loads
+       asynchronously (Promise-based, kicked off on DOMContentLoaded) and
+       its OWN top-level code re-assigns window.applyZoeFilter to a
+       generic default (merging experience/use_case/power/budget — fields
+       this project never uses) shortly after — reliably BEFORE this
+       window.load handler runs, since 'load' waits for that dynamically
+       inserted script too. Capturing "the current value" at that point
+       would silently capture the generic default, not honeywell-nlp.js's
+       real logic, and every chip-click state (medium, flow_rate, ...)
+       would stop reaching __hwReq. Replicating honeywell-nlp.js's own
+       one-line merge directly here sidesteps the race entirely — safe
+       because this project's conversation.json never sets the generic
+       engine fields. */
+    window.applyZoeFilter = function (state) {
+      window.__hwReq = window.__hwReq || {};
+      Object.keys(state || {}).forEach(function (k) { window.__hwReq[k] = state[k]; });
+      renderChipTray();
+    };
+    var _origRouteFreeText = window._routeFreeText;
+    window._routeFreeText = function (text) {
+      var next = typeof _origRouteFreeText === 'function' ? _origRouteFreeText(text) : undefined;
+      renderChipTray();
+      return next;
+    };
 
     /* Which handoff variant applies depends on the actuator currently
        selected, so schedule/export routing reads the live parse state

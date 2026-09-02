@@ -56,6 +56,14 @@ a { color: inherit; text-decoration: none; }
 .hw-breadcrumb {
   padding: 14px 32px; font-size: 13px; color: #5a5a5a;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* Zoe mount point — 32px below the breadcrumb regardless of whether
+   .hw-promo / .hw-main are hidden (both go display:none when Zoe opens,
+   so relying on their own margins collapsing wouldn't be reliable). */
+#hwZoeMount {
+  margin-top: 32px;
 }
 .hw-breadcrumb a { color: #5a5a5a; }
 .hw-breadcrumb .current { color: #3596ff; }
@@ -90,21 +98,11 @@ a { color: inherit; text-decoration: none; }
 .hw-configure-btn {
   font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: .02em;
   padding: 10px 20px; border-radius: 4px; border: none;
+  background: #0071B3; color: #fff; cursor: pointer;
+}
+.hw-configure-btn:disabled {
   background: #dfe0df; color: #606060; cursor: not-allowed;
 }
-
-.hw-promo-divider { display: flex; align-items: center; gap: 8px; color: #8a8a8a; font-size: 12px; }
-.hw-promo-divider::before, .hw-promo-divider::after { content: ""; width: 20px; height: 1px; background: #4a4a4a; }
-
-.hw-zoe-cta {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: transparent; border: 1.5px solid #3596ff; color: #fff;
-  font-family: inherit; font-size: 13px; font-weight: 700;
-  padding: 10px 18px; border-radius: 4px; cursor: pointer;
-  transition: background .15s;
-}
-.hw-zoe-cta:hover { background: rgba(53,150,255,0.15); }
-.hw-zoe-cta .spark { font-size: 15px; color: #3596ff; }
 
 .hw-main { padding: 0 32px 40px; }
 .hw-main h1 { font-size: 28px; font-weight: 400; color: #1d1d1d; margin: 0 0 24px; }
@@ -138,6 +136,4 @@ a { color: inherit; text-decoration: none; }
   .hw-footer-grid { grid-template-columns: 1fr; }
   .hw-promo { flex-direction: column; align-items: flex-start; }
   .hw-promo-right { flex-direction: column; align-items: flex-start; }
-  .hw-promo-divider { align-self: stretch; }
-  .hw-promo-divider::before, .hw-promo-divider::after { flex: 1; width: auto; }
 }
