@@ -275,6 +275,17 @@
   :root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page {
     height: calc(100dvh - 220px);
   }
+  /* Mobile ref: figma.com/design/M9mJ4W6J77PI3Rny7zhygs, node 2092:1611
+     ("390w default"). Transcript + composer inset shrinks from the
+     desktop reference's 48px/16px gutters to 8px so message bubbles and
+     the composer use the narrow viewport instead of losing ~1/4 of it
+     to side padding sized for a 1136px-wide panel. */
+  :root[data-theme="honeywell"] .zoe-mock-panel.is-wedge .zoe-mock-body {
+    padding: 32px 8px 8px;
+  }
+  :root[data-theme="honeywell"] .zoe-mock-panel.hw-zoe-page .zoe-mock-foot {
+    margin: 0 8px 16px;
+  }
 }
 
 /* ── Figma reference restyle (v1.1) ─────────────────────────────────────
