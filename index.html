@@ -13,9 +13,17 @@
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/tokens.css" />
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/variables.css" />
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/zoe-widget.css" />
+<!-- AI Companion's product-comparison-v2 table (v1.2 — SKU comparison mode).
+     The plain Zoe engine can mount this component directly (zoe-engine.js
+     addComparisonV2 → window.AiCompanion.renderProductComparisonV2) without
+     the rest of the AI Companion widget shell — see scripts/ai-companion-
+     engine.js below. Its --zv-comparison-* tokens self-default onto a newer
+     --zv-bg-*/--zv-text-*/--zv-border-* naming generation this project's
+     token files never adopted; bridged in themes/honeywell.css. -->
+<link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/ai-companion/80-product-comparison-v2.css" />
 
 <!-- Client theme — the only brand-fill file, local to this mockup. -->
-<link rel="stylesheet" href="themes/honeywell.css?v=12" />
+<link rel="stylesheet" href="themes/honeywell.css?v=13" />
 </head>
 <body>
 
@@ -668,6 +676,143 @@
           "next": "summary"
         }
       ]
+    },
+    "s2_failsafe_uncertain": {
+      "bot": [
+        "Totally fine not to have that locked in yet — it's not really a spec question, it's a call about which failure mode your team would rather manage if that ever happens. Here are both options: they perform identically on flow control, they only differ in what happens if power or the signal drops."
+      ],
+      "recs": [
+        {
+          "name": "VRN2B006.00PX + MN7505A2209+3R",
+          "match": "Non-spring-return · fail-in-place",
+          "price": "In stock · typical lead time 3–5 business days",
+          "why": "Holds its last position if power or signal is ever lost — flow keeps moving, just without active control until it's restored.",
+          "imageKey": "actuator-fail-in-place"
+        },
+        {
+          "name": "VRN2B006.00PX + MS7505A2130/U",
+          "match": "Spring-return · fail-safe closed",
+          "price": "In stock · typical lead time 3–5 business days",
+          "why": "Drives fully closed if power or signal is ever lost — a defined stop rather than an uncontrolled flow.",
+          "imageKey": "actuator-fail-safe-closed"
+        }
+      ],
+      "chips": [
+        {
+          "label": "How are they different?",
+          "next": "s2_failsafe_compare"
+        },
+        {
+          "label": "Which one do most customers pick?",
+          "next": "s2_failsafe_popularity"
+        },
+        {
+          "label": "Can we decide this later?",
+          "next": "s2_failsafe_defer"
+        }
+      ]
+    },
+    "s2_failsafe_popularity": {
+      "bot": [
+        "There's no universal answer, but for a cooling loop like this — where a brief interruption to two presses isn't catastrophic — most teams default to <b>fail-in-place</b>: it's the simpler, lower-cost actuator and it avoids an abrupt shutdown. <b>Fail-safe closed</b> shows up more often on lines with real safety-critical exposure, where an uncontrolled-but-flowing loop is the bigger risk. It's a process-risk call, not a popularity contest — your safety team's read on this line is worth more than a default."
+      ],
+      "chips": [
+        {
+          "label": "How are they different?",
+          "next": "s2_failsafe_compare"
+        },
+        {
+          "label": "Go with fail-in-place",
+          "next": "s2_summary",
+          "state": {
+            "fail_safe": "Fail-in-place"
+          }
+        },
+        {
+          "label": "Go with fail-safe closed",
+          "next": "refine_failsafe_closed",
+          "state": {
+            "fail_safe": "Fail-safe closed"
+          }
+        }
+      ]
+    },
+    "s2_failsafe_defer": {
+      "bot": [
+        "Sure — no need to lock it in now. I'll set <b>fail-in-place</b> as the placeholder for the rest of this configuration since it's the simpler baseline; swapping to fail-safe closed later is just an actuator change, nothing else on the valve or wiring moves."
+      ],
+      "rec": {
+        "name": "VRN2B006.00PX + MN7505A2209+3R",
+        "match": "Placeholder — confirm with your safety team",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "Non-spring-return, modulating 2–10 Vdc, 24 Vac, fail-in-place, holds position if power or signal is ever lost. Swappable to a spring-return, fail-safe closed actuator later with no other changes.",
+        "imageKey": "actuator-fail-in-place"
+      },
+      "chips": [
+        {
+          "label": "Add to schedule",
+          "next": "handoff_schedule"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "handoff_export"
+        },
+        {
+          "label": "Actually, let's compare them",
+          "next": "s2_failsafe_compare"
+        }
+      ]
+    },
+    "s2_failsafe_compare": {
+      "bot": [
+        "Here's the side-by-side — same valve body, same control signal and supply either way. The only real difference is what happens on a power or signal loss, which is what your team would need to weigh."
+      ],
+      "compare": [
+        {
+          "name": "VRN2B006.00PX + MN7505A2209+3R",
+          "price": "In stock · typical lead time 3–5 business days",
+          "specs": {
+            "Valve body": "VRN2B006.00PX — 2-way PICV, 3/4 in FNPT",
+            "Flow range": "0–6 GPM",
+            "Actuator": "MN7505A2209+3R (non-spring-return)",
+            "Control signal": "Modulating 2–10 VDC",
+            "Supply voltage": "24V AC/DC",
+            "On power/signal loss": "Holds last position (fail-in-place)",
+            "Max temperature": "250°F",
+            "Enclosure": "NEMA 3R"
+          }
+        },
+        {
+          "name": "VRN2B006.00PX + MS7505A2130/U",
+          "price": "In stock · typical lead time 3–5 business days",
+          "specs": {
+            "Valve body": "VRN2B006.00PX — 2-way PICV, 3/4 in FNPT",
+            "Flow range": "0–6 GPM",
+            "Actuator": "MS7505A2130/U (spring-return)",
+            "Control signal": "Modulating 2–10 VDC",
+            "Supply voltage": "24V AC/DC",
+            "On power/signal loss": "Drives fully closed (fail-safe closed)",
+            "Max temperature": "250°F",
+            "Enclosure": "NEMA 3R"
+          }
+        }
+      ],
+      "chips": [
+        {
+          "label": "Go with fail-in-place",
+          "next": "s2_summary",
+          "state": {
+            "fail_safe": "Fail-in-place"
+          }
+        },
+        {
+          "label": "Go with fail-safe closed",
+          "next": "refine_failsafe_closed",
+          "state": {
+            "fail_safe": "Fail-safe closed"
+          }
+        }
+      ]
     }
   },
   "assistantName": "Zoe",
@@ -710,9 +855,19 @@
         data-brand="honeywell"
         data-mode="light"></script>
 
+<!-- AI Companion engine — loaded ONLY for its standalone
+     window.AiCompanion.renderProductComparisonV2(a, b, mount, opts) export
+     (v1.2 — SKU comparison mode). Everything else in this file gates on
+     `document.querySelectorAll('[data-aic-panel]')`, which this page never
+     has, so nothing auto-mounts and the plain Zoe chat engine above is
+     unaffected. zoe-engine.js's addComparisonV2() calls this export
+     directly whenever a flow node carries `compare: [productA, productB]`,
+     falling back to a plain rec-slider if this script isn't loaded. -->
+<script src="https://zoovu-mockup.vercel.app/scripts/ai-companion-engine.js"></script>
+
 <!-- Vertical-specific free-text routing — documented extension point,
      see config/honeywell-nlp.js header comment. -->
-<script src="config/honeywell-nlp.js?v=6"></script>
+<script src="config/honeywell-nlp.js?v=7"></script>
 
 <!-- ── Full-page restyle (v1.1) ──────────────────────────────────────
      Replaces the earlier bottom-center docked-bar design. Keeps the

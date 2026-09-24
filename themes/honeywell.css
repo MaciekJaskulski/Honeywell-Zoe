@@ -410,3 +410,76 @@
   object-fit: cover;
   padding: 0;
 }
+
+/* ── AI Companion "comparison v2" token bridge (BESPOKE — v1.2, SKU
+   comparison mode). 80-product-comparison-v2.css self-defaults its
+   --zv-comparison-* tokens onto a --zv-bg-*/--zv-text-*/--zv-border-*
+   naming generation this project's token files (styles/tokens.css,
+   styles/variables.css) predate and never adopted — every one of those
+   resolves to nothing without a bridge, which is why other themes in
+   this library (e.g. bestbuy.css) only partially cover the same list.
+   Semantic ones are aliased onto the equivalent --zv-color-* tokens
+   already defined above so there's one source of truth, not duplicated
+   hex. The rest (spacing/type/motion scale) have no equivalent anywhere
+   in this theme, so they're given plain standalone values here — same
+   category of gap as the .zoe-send background override earlier in this
+   file. Winner-cell green (--aic-success-*) is retoned to this brand's
+   one interactive blue instead of introducing an unbranded green,
+   matching the existing rec-card "match" badge. In this project's own
+   fail-in-place vs. fail-safe-closed comparison neither actuator is
+   objectively "better" (see s2_failsafe_risk_explainer's own copy), so
+   no spec row is ever expected to actually trigger the winner treatment
+   — these tokens exist for whenever a real numeric/boolean differentiator
+   (price, lead time) gets added to a compare node later. */
+:root[data-theme="honeywell"] {
+  --zv-bg-surface:         var(--zv-color-surface);
+  --zv-bg-surface-alt:     var(--zv-color-surface-alt);
+  --zv-bg-surface-muted:   var(--zv-color-surface-muted);
+  --zv-bg-overlay-soft:    rgba(0, 0, 0, .4);
+  --zv-border-default:     var(--zv-color-border);
+  --zv-border-soft:        var(--zv-color-border-soft);
+  --zv-border-width-thick: 2px;
+  --zv-text-primary:       var(--zv-color-text);
+  --zv-text-secondary:     var(--zv-color-text-secondary);
+  --zv-text-muted:         var(--zv-color-text-muted);
+  --zv-color-warning:      #B8860B;
+  --zv-focus-ring-color:   var(--zv-color-brand);
+  --aic-success-bg:        color-mix(in srgb, var(--zv-color-brand) 10%, white);
+  --aic-success-border:    var(--zv-color-brand);
+  --aic-success-pill-bg:   var(--zv-color-brand);
+  --aic-success-pill-text: #ffffff;
+
+  /* Spacing / type / motion scale — no equivalent elsewhere in this theme. */
+  --zv-space-2xs: 4px;
+  --zv-space-xs:  6px;
+  --zv-space-sm:  8px;
+  --zv-space-md:  12px;
+  --zv-space-lg:  16px;
+  --zv-space-xl:  24px;
+  --zv-font-size-2xs: 11px;
+  --zv-font-size-xs:  12px;
+  --zv-font-size-sm:  13px;
+  --zv-font-size-md:  14px;
+  --zv-font-size-lg:  16px;
+  --zv-font-weight-regular: 400;
+  --zv-line-height-snug: 1.3;
+  --zv-radius-circle: 50%;
+  --zv-duration-base: 200ms;
+  --zv-duration-fast: 120ms;
+  --zv-easing-default: ease;
+  --zv-touch-target: 44px;
+  --zv-tracking-wide: 0.02em;
+  --zv-z-modal: 1000;
+  --zv-z-sticky: 10;
+  --zv-opacity-disabled: 0.5;
+}
+
+/* The table's own min-width (520px default) forces horizontal scroll
+   inside the transcript on the 390px mobile reference (see the
+   max-width:640px breakpoint above) — scoped narrower so it fits
+   without scrolling on a phone-width panel; unaffected at desktop width. */
+@media (max-width: 640px) {
+  :root[data-theme="honeywell"] {
+    --zv-comparison-table-min-w: 0px;
+  }
+}

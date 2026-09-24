@@ -264,6 +264,15 @@
     return /safety/.test(lo) && /close\s*completely|closes\s*completely|fully\s*closed|shut\s*(it\s*)?completely/.test(lo);
   }
 
+  /* v1.2 — SKU comparison mode. Free text at the fail-safe question that
+     expresses genuine uncertainty (not a preference the two chips already
+     cover) routes to the two-SKU comparison flow instead of defaulting to
+     fail-in-place. Scoped by the caller to the s2_ask_failsafe step via
+     lastBotText(), so it can't misfire elsewhere in the conversation. */
+  function isScenario2FailsafeUncertain(lo) {
+    return /not sure|don'?t know|no idea|unsure|not certain|no preference|either (one|is fine|works)/.test(lo);
+  }
+
   function routeScenario2(text) {
     var lo = text.toLowerCase();
     var last = lastBotText().toLowerCase();
@@ -300,6 +309,11 @@
       return 's2_ask_failsafe';
     }
     if (last.indexOf('avoids an abrupt process upset') !== -1) {
+      /* v1.2 — SKU comparison mode. The two fail-safe chips at this step
+         cover a clear pick; free text ("I'm not sure which one I need")
+         is the uncertainty case the chips can't express, so it gets its
+         own branch instead of silently defaulting to fail-in-place. */
+      if (isScenario2FailsafeUncertain(lo)) return 's2_failsafe_uncertain';
       req.fail_safe = 'Fail-in-place';
       return 's2_summary';
     }
