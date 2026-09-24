@@ -225,6 +225,23 @@
   overflow-x: visible;
   overflow-y: auto;
 }
+/* zoe-widget.css documents this exact failure for the AI Companion path
+   (its own comment: "that collapsed the .zoe-rec-slider (and its cards,
+   images overflowing) to ~12px so the products vanished") and ships a
+   fix scoped to `.aic-panel__body` — the AI Companion wedge's own scroll
+   container. This project's is-wedge modifier runs the plain Zoe chat
+   DOM instead (see the .zoe-mock-body override above), whose `.zoe-mock-
+   body` is the SAME kind of fixed-height flex column (canonical
+   `display:flex;flex-direction:column` from is-wedge, height pinned by
+   .hw-zoe-page above) — so it hits the identical bug the canonical fix
+   never covers: rec cards, .zoe-rec-slider and the compare table (all
+   appended as direct flex children of .zoe-mock-body) get shrunk instead
+   of the body just scrolling. Same fix, ported to this project's actual
+   scroll container. (v1.2 — surfaced by the SKU comparison mode's rec-
+   slider and compare table.) */
+:root[data-theme="honeywell"] .zoe-mock-panel.is-wedge .zoe-mock-body > * {
+  flex: 0 0 auto;
+}
 :root[data-theme="honeywell"] .zoe-msg {
   max-width: 640px;
 }
