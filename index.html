@@ -788,7 +788,8 @@
             "On power/signal loss": "Holds last position (fail-in-place)",
             "Max temperature": "250°F",
             "Enclosure": "NEMA 3R"
-          }
+          },
+          "imageKey": "actuator-fail-in-place"
         },
         {
           "name": "VRN2B006.00PX + MS7505A2130/U",
@@ -802,7 +803,8 @@
             "On power/signal loss": "Drives fully closed (fail-safe closed)",
             "Max temperature": "250°F",
             "Enclosure": "NEMA 3R"
-          }
+          },
+          "imageKey": "actuator-fail-safe-closed"
         }
       ],
       "chips": [
@@ -1155,6 +1157,32 @@
       renderChipTray();
       return next;
     };
+
+    /* v1.2 — SKU comparison mode. The compare table's product-head thumb
+       is CSS-only by design (a generic, category-matched silhouette via
+       .zv-media-illustrated[data-cat] — see assets/component-structure.css);
+       it has no `image`/`imageKey` field in its schema at all, unlike the
+       plain rec card. Our valve/actuator SKUs don't match any of its known
+       categories (camera/lens/tool/bag/audio) anyway, so they'd only ever
+       get the generic box icon. Wrapping the renderer to swap each thumb
+       for the SAME real photo the rec cards already use (via this file's
+       own __IMAGE_MAP__ + each compare product's imageKey) keeps the
+       table visually consistent with the rest of the conversation instead
+       of introducing a second, more abstract way to represent a product. */
+    if (window.AiCompanion && typeof window.AiCompanion.renderProductComparisonV2 === 'function') {
+      var _origRenderComparison = window.AiCompanion.renderProductComparisonV2;
+      window.AiCompanion.renderProductComparisonV2 = function (a, b, mount, opts) {
+        _origRenderComparison(a, b, mount, opts);
+        [a, b].forEach(function (product, idx) {
+          var thumb = mount.querySelectorAll('.zv-product-comparison-v2__thumb')[idx];
+          var src = product && product.imageKey && window.__IMAGE_MAP__ && window.__IMAGE_MAP__[product.imageKey];
+          if (!thumb || !src) return;
+          thumb.classList.remove('zv-media-illustrated');
+          thumb.removeAttribute('data-cat');
+          thumb.innerHTML = '<img src="' + src + '" alt="" style="width:100%;height:100%;object-fit:contain">';
+        });
+      };
+    }
 
     /* Which handoff variant applies depends on the actuator currently
        selected, so schedule/export routing reads the live parse state

@@ -663,7 +663,8 @@
             "On power/signal loss": "Holds last position (fail-in-place)",
             "Max temperature": "250°F",
             "Enclosure": "NEMA 3R"
-          }
+          },
+          "imageKey": "actuator-fail-in-place"
         },
         {
           "name": "VRN2B006.00PX + MS7505A2130/U",
@@ -677,7 +678,8 @@
             "On power/signal loss": "Drives fully closed (fail-safe closed)",
             "Max temperature": "250°F",
             "Enclosure": "NEMA 3R"
-          }
+          },
+          "imageKey": "actuator-fail-safe-closed"
         }
       ],
       "chips": [
