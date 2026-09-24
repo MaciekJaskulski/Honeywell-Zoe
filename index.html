@@ -826,29 +826,30 @@
     },
     "s3_actuator_recognized": {
       "bot": [
-        "Got it — <b>MN7695D1006</b> is a non-spring-return modulating actuator: 2–10 VDC control signal, 24V AC/DC supply, rated around 150 lb-in of torque. That's enough to drive our VRN2B pressure-independent bodies anywhere from <b>1-inch</b> up to <b>1-1/4-inch</b> — torque needs scale with valve size, so the model number alone doesn't tell me which body you need.",
+        "<div style=\"display:flex;align-items:center;gap:12px\"><img src=\"assets/img/actuator-fail-in-place.jpeg\" alt=\"MN7695D1006\" style=\"width:64px;height:64px;object-fit:cover;border:1px solid var(--zv-color-border,#E0E0E0);border-radius:4px;flex-shrink:0\"><div><b>MN7695D1006</b> — confirmed<br><span style=\"font-size:12px;color:var(--zv-color-text-muted,#5F5E5A)\">Non-spring-return modulating actuator · 2–10 VDC · 24V AC/DC · ~150 lb-in torque</span></div></div>",
+        "That torque rating is enough to drive our VRN2B pressure-independent bodies anywhere from <b>1-inch</b> up to <b>1-1/4-inch</b> — torque needs scale with valve size, so the model number alone doesn't tell me which body you need.",
         "What's the flow rate for this branch, or the connection size of the valve you're replacing?"
       ],
       "chips": [
         {
-          "label": "About 8 GPM",
+          "label": "Under 10 GPM",
           "next": "s3_valve_1in",
           "state": {
             "scenario3_flow": 8
           }
         },
         {
-          "label": "Somewhere around 12–14 GPM",
+          "label": "Between 10–15 GPM",
           "next": "s3_valve_overlap",
           "state": {
-            "scenario3_flow": 13
+            "scenario3_flow": 12
           }
         },
         {
-          "label": "About 20 GPM",
+          "label": "Over 15 GPM",
           "next": "s3_valve_125in",
           "state": {
-            "scenario3_flow": 20
+            "scenario3_flow": 18
           }
         }
       ]
