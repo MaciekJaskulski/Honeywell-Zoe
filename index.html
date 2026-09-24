@@ -21,6 +21,14 @@
      --zv-bg-*/--zv-text-*/--zv-border-* naming generation this project's
      token files never adopted; bridged in themes/honeywell.css. -->
 <link rel="stylesheet" href="https://zoovu-mockup.vercel.app/styles/ai-companion/80-product-comparison-v2.css" />
+<!-- Supplies the actual glyph for .zv-media-illustrated[data-cat=…] — the
+     compare table's product thumbnails render this class but ship no icon
+     of their own (by design: "swapped per category via [data-cat]", see
+     this file's own header comment). Without it the thumbs are just empty
+     boxes. Checked for class collisions with the plain Zoe DOM — none;
+     this file only touches .zv-product-vertical/horizontal + .zv-results,
+     none of which this project uses. -->
+<link rel="stylesheet" href="https://zoovu-mockup.vercel.app/assets/component-structure.css" />
 
 <!-- Client theme — the only brand-fill file, local to this mockup. -->
 <link rel="stylesheet" href="themes/honeywell.css?v=14" />
