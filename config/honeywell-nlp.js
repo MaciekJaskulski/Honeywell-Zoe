@@ -323,6 +323,51 @@
     return 's2_ask_medium';
   }
 
+  /* =====================================================================
+     SCENARIO 3 — identity-first: the opening message is a BARE actuator
+     model number, nothing else (a tech reading a nameplate off a failed
+     unit), rather than a spec sentence (Scenario 1) or a symptom (Scenario
+     2). MN7695D1006 is a higher-torque modulating actuator whose torque
+     class genuinely spans two adjacent VRN2B body sizes (1 in and 1-1/4
+     in) — the model number alone doesn't say which, so Zoe has to ask the
+     one thing that does: flow rate. New nodes only (s3_*); does not touch
+     Scenario 1 or 2's flow. See s3_actuator_recognized in
+     conversation.json for the full node graph this drives.
+     ===================================================================== */
+
+  function isScenario3Opening(text) {
+    return /^[a-z]{2}\s*-?\s*7695\s*-?\s*d\s*-?\s*1006$/i.test(text.trim());
+  }
+
+  /* Sizing bands mirror real overlapping PICV turndown ranges — a body's
+     rated maximum isn't a hard cliff, so adjacent sizes deliberately
+     overlap in the 10–15 GPM band. Below it, only the 1 in body has
+     enough turndown for accurate low-flow control; above it, only the
+     1-1/4 in body has the headroom; inside it, both are genuinely valid
+     and it's a real trade-off (see s3_valve_compare), not a gap in the
+     data. */
+  function scenario3ValveForFlow(gpm) {
+    if (gpm < 10) return 's3_valve_1in';
+    if (gpm > 15) return 's3_valve_125in';
+    return 's3_valve_overlap';
+  }
+
+  function routeScenario3(text) {
+    var lo = text.toLowerCase();
+    var last = lastBotText().toLowerCase();
+    /* Matches the exact follow-up question in s3_actuator_recognized's
+       last bot line — see conversation.json. */
+    if (last.indexOf("valve you're replacing") !== -1) {
+      var m = lo.match(/(\d+(\.\d+)?)/);
+      if (m) {
+        var gpm = parseFloat(m[1]);
+        window.__hwReq.scenario3_flow = gpm;
+        return scenario3ValveForFlow(gpm);
+      }
+    }
+    return 's3_actuator_recognized';
+  }
+
   window.applyZoeFilter = function (state) {
     window.__hwReq = window.__hwReq || {};
     Object.keys(state || {}).forEach(function (k) { window.__hwReq[k] = state[k]; });
@@ -344,6 +389,9 @@
 
     if (window.__hwReq.scenario === 2) return routeScenario2(text);
     if (isScenario2Opening(text)) { window.__hwReq.scenario = 2; return 's2_ask_medium'; }
+
+    if (window.__hwReq.scenario === 3) return routeScenario3(text);
+    if (isScenario3Opening(text)) { window.__hwReq.scenario = 3; window.__hwReq.actuator_sku = text.trim(); return 's3_actuator_recognized'; }
 
     /* Resolving a previously-asked flow-rate re-entry (see conflict nodes' state chip). */
     if (window.__hwReq._conflictPending) {

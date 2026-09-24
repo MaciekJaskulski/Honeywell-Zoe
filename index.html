@@ -823,6 +823,225 @@
           }
         }
       ]
+    },
+    "s3_actuator_recognized": {
+      "bot": [
+        "Got it — <b>MN7695D1006</b> is a non-spring-return modulating actuator: 2–10 VDC control signal, 24V AC/DC supply, rated around 150 lb-in of torque. That's enough to drive our VRN2B pressure-independent bodies anywhere from <b>1-inch</b> up to <b>1-1/4-inch</b> — torque needs scale with valve size, so the model number alone doesn't tell me which body you need.",
+        "What's the flow rate for this branch, or the connection size of the valve you're replacing?"
+      ],
+      "chips": [
+        {
+          "label": "About 8 GPM",
+          "next": "s3_valve_1in",
+          "state": {
+            "scenario3_flow": 8
+          }
+        },
+        {
+          "label": "Somewhere around 12–14 GPM",
+          "next": "s3_valve_overlap",
+          "state": {
+            "scenario3_flow": 13
+          }
+        },
+        {
+          "label": "About 20 GPM",
+          "next": "s3_valve_125in",
+          "state": {
+            "scenario3_flow": 20
+          }
+        }
+      ]
+    },
+    "s3_valve_1in": {
+      "bot": [
+        "At that flow, the <b>1-inch</b> body is the correct fit — the 1-1/4-inch body's turndown range doesn't extend that low, so control would be less precise at this flow. Pulling the match…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD010 — VRN2B015.00PX + MN7695D1006",
+        "match": "Recommended for your flow",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "<b>Valve</b> VRN2B015.00PX — 2-way PICV, 1 in FNPT, 0–15 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7695D1006 — non-spring return, modulating 2–10 Vdc, 24 Vac, ~150 lb-in torque, NEMA 3R enclosure.",
+        "imageKey": "valve"
+      },
+      "chips": [
+        {
+          "label": "Compare with the 1-1/4-inch option",
+          "next": "s3_valve_compare"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "s3_handoff_schedule_1in"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "s3_handoff_export_1in"
+        }
+      ]
+    },
+    "s3_valve_125in": {
+      "bot": [
+        "At that flow, the <b>1-1/4-inch</b> body is the one sized for it — the 1-inch body tops out well below this range. Pulling the match…"
+      ],
+      "rec": {
+        "name": "VRN2BHPXD013 — VRN2B025.00PX + MN7695D1006",
+        "match": "Recommended for your flow",
+        "price": "In stock · typical lead time 3–5 business days",
+        "why": "<b>Valve</b> VRN2B025.00PX — 2-way PICV, 1-1/4 in FNPT, 10–25 GPM, plated brass trim, 250°F max, 360 psi rated.<br><b>Actuator</b> MN7695D1006 — non-spring return, modulating 2–10 Vdc, 24 Vac, ~150 lb-in torque, NEMA 3R enclosure.",
+        "imageKey": "valve"
+      },
+      "chips": [
+        {
+          "label": "Compare with the 1-inch option",
+          "next": "s3_valve_compare"
+        },
+        {
+          "label": "Add to schedule",
+          "next": "s3_handoff_schedule_125in"
+        },
+        {
+          "label": "Export configuration summary",
+          "next": "s3_handoff_export_125in"
+        }
+      ]
+    },
+    "s3_valve_overlap": {
+      "bot": [
+        "Right in the overlap — both the 1-inch and 1-1/4-inch bodies are rated to handle that flow, just with a different trade-off. Here they are side by side."
+      ],
+      "recs": [
+        {
+          "name": "VRN2B015.00PX + MN7695D1006",
+          "match": "1-inch · tighter low-flow control",
+          "price": "In stock · typical lead time 3–5 business days",
+          "why": "Full turndown range at this flow — the better pick if this branch ever runs lower than expected.",
+          "imageKey": "valve"
+        },
+        {
+          "name": "VRN2B025.00PX + MN7695D1006",
+          "match": "1-1/4-inch · more headroom",
+          "price": "In stock · typical lead time 3–5 business days",
+          "why": "More capacity if this branch's flow could grow — slightly less precise control at the low end of its range.",
+          "imageKey": "valve"
+        }
+      ],
+      "chips": [
+        {
+          "label": "How are they different?",
+          "next": "s3_valve_compare"
+        },
+        {
+          "label": "Go with the 1-inch",
+          "next": "s3_valve_1in"
+        },
+        {
+          "label": "Go with the 1-1/4-inch",
+          "next": "s3_valve_125in"
+        }
+      ]
+    },
+    "s3_valve_compare": {
+      "bot": [
+        "Here's the side-by-side — same actuator either way, the difference is which body fits the flow range."
+      ],
+      "compare": [
+        {
+          "name": "VRN2B015.00PX + MN7695D1006",
+          "price": "In stock · typical lead time 3–5 business days",
+          "imageKey": "valve",
+          "specs": {
+            "Valve body": "VRN2B PICV",
+            "Connection size": "1 in FNPT",
+            "Max flow": "15 GPM",
+            "Low-flow control": "Full turndown to near-zero flow",
+            "Actuator": "MN7695D1006",
+            "Control signal": "Modulating 2–10 VDC",
+            "Supply voltage": "24V AC/DC",
+            "Enclosure": "NEMA 3R"
+          }
+        },
+        {
+          "name": "VRN2B025.00PX + MN7695D1006",
+          "price": "In stock · typical lead time 3–5 business days",
+          "imageKey": "valve",
+          "specs": {
+            "Valve body": "VRN2B PICV",
+            "Connection size": "1-1/4 in FNPT",
+            "Max flow": "25 GPM",
+            "Low-flow control": "Not recommended below ~10 GPM",
+            "Actuator": "MN7695D1006",
+            "Control signal": "Modulating 2–10 VDC",
+            "Supply voltage": "24V AC/DC",
+            "Enclosure": "NEMA 3R"
+          }
+        }
+      ],
+      "chips": [
+        {
+          "label": "Go with the 1-inch",
+          "next": "s3_valve_1in"
+        },
+        {
+          "label": "Go with the 1-1/4-inch",
+          "next": "s3_valve_125in"
+        }
+      ]
+    },
+    "s3_handoff_schedule_1in": {
+      "bot": [
+        "Added to your schedule: <b>VRN2BHPXD010</b> — pressure-independent control valve + modulating actuator, 1 in, 0–15 GPM, 24V AC/DC, 2–10 VDC.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        {
+          "label": "Export configuration summary",
+          "next": "s3_handoff_export_1in"
+        },
+        {
+          "label": "Start a new configuration",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "s3_handoff_export_1in": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nSKU: VRN2BHPXD010\nValve: VRN2B015.00PX — 2-way PICV, 1in FNPT, 0-15 GPM, brass trim, 250F, 360 psi\nActuator: MN7695D1006 — Modulating 2-10 Vdc, 24V AC/DC, ~150 lb-in torque, NEMA 3R\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [
+        {
+          "label": "Done — start over",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "s3_handoff_schedule_125in": {
+      "bot": [
+        "Added to your schedule: <b>VRN2BHPXD013</b> — pressure-independent control valve + modulating actuator, 1-1/4 in, 10–25 GPM, 24V AC/DC, 2–10 VDC.",
+        "Saved the same way an item added from the standard Product Selector would be — ready to route to Commerce Cloud or a Honeywell rep."
+      ],
+      "chips": [
+        {
+          "label": "Export configuration summary",
+          "next": "s3_handoff_export_125in"
+        },
+        {
+          "label": "Start a new configuration",
+          "next": "plp_start"
+        }
+      ]
+    },
+    "s3_handoff_export_125in": {
+      "bot": [
+        "Configuration summary — ready to copy, download, or attach to an email:",
+        "<pre style=\"white-space:pre-wrap;font-family:inherit;font-size:12px;margin:0\">HONEYWELL VALVE + ACTUATOR CONFIGURATION\nSKU: VRN2BHPXD013\nValve: VRN2B025.00PX — 2-way PICV, 1-1/4in FNPT, 10-25 GPM, brass trim, 250F, 360 psi\nActuator: MN7695D1006 — Modulating 2-10 Vdc, 24V AC/DC, ~150 lb-in torque, NEMA 3R\nGenerated via Zoe conversational advisor — Honeywell Building Automation</pre>"
+      ],
+      "chips": [
+        {
+          "label": "Done — start over",
+          "next": "plp_start"
+        }
+      ]
     }
   },
   "assistantName": "Zoe",
